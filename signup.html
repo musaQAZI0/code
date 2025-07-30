@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Crowd</title>
+    <link rel="stylesheet" href="login-styles.css">
+    <script src="js/data-manager.js"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="background-image"></div>
+        <div class="login-modal">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#f97316">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <span class="logo-text">crowd</span>
+            </div>
+            
+            <h1>Create Account</h1>
+            <h2>Join Crowd today!</h2>
+            
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+            
+            <form class="login-form" onsubmit="handleSignup(event)">
+                <input type="email" placeholder="Email" class="email-input" id="email" required>
+                <input type="text" placeholder="First Name" class="email-input" id="firstName" required>
+                <input type="text" placeholder="Last Name" class="email-input" id="lastName" required>
+                <input type="password" placeholder="Password (min 6 characters)" class="email-input" id="password" required minlength="6">
+                <input type="password" placeholder="Confirm Password" class="email-input" id="confirmPassword" required>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="isOrganizer">
+                    <label for="isOrganizer">I want to create and manage events</label>
+                </div>
+                
+                <button type="submit" class="continue-btn" id="signupBtn">Create Account</button>
+            </form>
+            
+            <div class="signup-section">
+                <p>Already have an account? <a href="login.html" class="signup-link">Log In</a></p>
+            </div>
+            
+            <div class="terms">
+                <p>By creating an account, you agree to Crowd's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .error-message {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #fecaca;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+            color: #166534;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #bbf7d0;
+            font-size: 14px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        .checkbox-group label {
+            color: #666;
+            cursor: pointer;
+        }
+
+        .continue-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        .strength-weak { color: #dc2626; }
+        .strength-medium { color: #f59e0b; }
+        .strength-strong { color: #10b981; }
+    </style>
+
+    <script>
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.dataManager.isAuthenticated()) {
+                window.location.href = 'organizer-dashboard.html';
+            }
+
+            // Pre-fill email if provided in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            if (email) {
+                document.getElementById('email').value = email;
+            }
+
+            // Add password strength indicator
+            const passwordInput = document.getElementById('password');
+            const strengthDiv = document.createElement('div');
+            strengthDiv.className = 'password-strength';
+            passwordInput.parentNode.insertBefore(strengthDiv, passwordInput.nextSibling);
+
+            passwordInput.addEventListener('input', function() {
+                const strength = checkPasswordStrength(this.value);
+                strengthDiv.textContent = strength.text;
+                strengthDiv.className = `password-strength ${strength.class}`;
+            });
+        });
+
+        function checkPasswordStrength(password) {
+            if (password.length < 6) {
+                return { text: 'Password too short', class: 'strength-weak' };
+            }
+            
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^A-Za-z0-9]/.test(password)) score++;
+
+            if (score < 3) {
+                return { text: 'Weak password', class: 'strength-weak' };
+            } else if (score < 4) {
+                return { text: 'Medium strength', class: 'strength-medium' };
+            } else {
+                return { text: 'Strong password', class: 'strength-strong' };
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            const successDiv = document.getElementById('successMessage');
+            successDiv.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.style.display = 'none';
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            hideMessages();
+
+            const email = document.getElementById('email').value.trim();
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const isOrganizer = document.getElementById('isOrganizer').checked;
+            const signupBtn = document.getElementById('signupBtn');
+
+            // Validation
+            if (!email || !firstName || !lastName || !password || !confirmPassword) {
+                showError('Please fill in all fields.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showError('Passwords do not match.');
+                return;
+            }
+
+            if (password.length < 6) {
+                showError('Password must be at least 6 characters long.');
+                return;
+            }
+
+            // Show loading state
+            signupBtn.textContent = 'Creating Account...';
+            signupBtn.disabled = true;
+            document.querySelector('.login-form').classList.add('loading');
+
+            try {
+                // Create user
+                const result = await window.dataManager.createUser({
+                    email,
+                    firstName,
+                    lastName,
+                    password,
+                    isOrganizer
+                });
+
+                if (result.success) {
+                    showSuccess('Account created successfully! Signing you in...');
+                    
+                    // Auto-login after successful signup
+                    setTimeout(async () => {
+                        const loginResult = await window.dataManager.authenticateUser(email, password);
+                        if (loginResult.success) {
+                            // Always redirect to dashboard home for new users
+                            window.location.href = 'dashboard-home.html';
+                        } else {
+                            window.location.href = `login.html?email=${encodeURIComponent(email)}`;
+                        }
+                    }, 1500);
+                } else {
+                    showError(result.error || 'Account creation failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                showError('An unexpected error occurred. Please try again.');
+            } finally {
+                // Reset button state
+                signupBtn.textContent = 'Create Account';
+                signupBtn.disabled = false;
+                document.querySelector('.login-form').classList.remove('loading');
+            }
+        }
+
+        // Handle form submission on Enter key
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                const form = document.querySelector('.login-form');
+                if (form.contains(event.target)) {
+                    handleSignup(event);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

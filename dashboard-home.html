@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Crowd</title>
+    <link rel="stylesheet" href="dashboard-home-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <script src="js/data-manager.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+       <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-text">crowd</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard-home.html" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="events-calendar.html" class="nav-item">
+                    <i class="fas fa-calendar"></i>
+                </a>
+                <a href="orders.html" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                </a>
+                <a href="marketing.html" class="nav-item">
+                    <i class="fas fa-bullhorn"></i>
+                </a>
+                <a href="analytics.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                </a>
+                <a href="finance.html" class="nav-item">
+                    <i class="fas fa-university"></i>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item">
+                    <i class="fas fa-th"></i>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-question-circle"></i>
+                </a>
+            </div>
+        </aside>
+
+<!-- Main Content -->
+<main class="main-content">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-text">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#f97316">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <span>crowd</span>
+            </div>
+            <div class="header-right">
+                <button class="create-btn" onclick="window.location.href='event-builder.html'">
+                    + Create
+                </button>
+                <div class="user-menu" onclick="toggleUserMenu()">
+                    <div class="user-avatar" id="userAvatar">AA</div>
+                    <span class="user-name" id="userName">abdul ahad</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Welcome Section -->
+                <section class="welcome-section">
+                    <div class="welcome-content">
+                        <div class="welcome-main">
+                            <h1 class="welcome-title" id="welcomeTitle">Oh hello, Abdul</h1>
+                            
+                            <div class="action-cards">
+                                <div class="action-card">
+                                    <div class="action-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                        </svg>
+                                    </div>
+                                    <h3>Start from scratch</h3>
+                                    <p>Add all your event details, create new tickets, and set up recurring events</p>
+                                    <button class="action-btn" onclick="window.location.href='event-builder.html'">Create event</button>
+                                </div>
+                                
+                                <div class="action-card">
+                                    <div class="action-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                        </svg>
+                                    </div>
+                                    <h3>Create my event faster with AI</h3>
+                                    <p>Answer a few quick questions to generate an event that's ready to publish almost instantly</p>
+                                    <button class="action-btn" onclick="window.location.href='create-event-ai.html'">Create with AI</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="welcome-sidebar">
+                            <div class="profile-prompt">
+                                <div class="prompt-header">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#3b82f6">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                    <span>Get discovered</span>
+                                </div>
+                                <h4>Set up your organizer profile</h4>
+                                <p>A complete profile can increase discovery of your event on search engines, highlight your brand and build trust with attendees</p>
+                                <a href="#" class="profile-link" onclick="setupProfile()">Set up your profile →</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Checklist Section -->
+                <section class="checklist-section">
+                    <h2>Your checklist</h2>
+                    <p class="checklist-subtitle">We make it easy to plan successful events. Here's how to start!</p>
+                    
+                    <div class="checklist-items">
+                        <div class="checklist-item" data-status="incomplete">
+                            <div class="checklist-content">
+                                <div class="checklist-info">
+                                    <h4>Create event</h4>
+                                    <p>Publish an event to reach millions of people on Crowd.</p>
+                                </div>
+                                <div class="checklist-status">
+                                    <span class="status-badge draft">Draft</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="checklist-item" data-status="incomplete">
+                            <div class="checklist-content">
+                                <div class="checklist-info">
+                                    <h4>Set up your organizer profile</h4>
+                                    <p>Highlight your brand by adding your organizer a name, image, and bio</p>
+                                </div>
+                                <div class="checklist-status">
+                                    <span class="status-badge incomplete">Incomplete</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="checklist-item" data-status="incomplete">
+                            <div class="checklist-content">
+                                <div class="checklist-info">
+                                    <h4>Add your bank account</h4>
+                                    <p>Get paid for future ticket sales by entering your bank details</p>
+                                </div>
+                                <div class="checklist-status">
+                                    <span class="status-badge incomplete">Incomplete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Top Resources Section -->
+                <section class="resources-section">
+                    <h2>Top resources for you</h2>
+                    <a href="#" class="section-link">Visit Crowd Blog</a>
+                    
+                    <div class="resource-cards">
+                        <div class="resource-card">
+                            <div class="resource-header">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                </svg>
+                                <div class="resource-meta">
+                                    <span class="resource-brand">Crowd</span>
+                                    <span class="resource-author">Marketing Experts</span>
+                                </div>
+                            </div>
+                            <h3>Digital Marketing Guide for Events</h3>
+                            <a href="#" class="resource-link">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="#3b82f6">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14,2 14,8 20,8"/>
+                                </svg>
+                                Read article
+                            </a>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-header">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                </svg>
+                                <div class="resource-meta">
+                                    <span class="resource-brand">Crowd</span>
+                                    <span class="resource-author">Marketing Experts</span>
+                                </div>
+                            </div>
+                            <h3>Safety Playbook for Events</h3>
+                            <a href="#" class="resource-link">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="#3b82f6">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14,2 14,8 20,8"/>
+                                </svg>
+                                Read article
+                            </a>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-header">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                </svg>
+                                <div class="resource-meta">
+                                    <span class="resource-brand">Crowd</span>
+                                    <span class="resource-author">Marketing Experts</span>
+                                </div>
+                            </div>
+                            <h3>10 Best Ways to Market and Sell Out Your Event</h3>
+                            <a href="#" class="resource-link">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="#3b82f6">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14,2 14,8 20,8"/>
+                                </svg>
+                                Read article
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Academy Section -->
+                <section class="academy-section">
+                    <div class="academy-header">
+                        <h2>Level up your skills at Crowd Academy</h2>
+                        <div class="academy-nav">
+                            <button class="nav-arrow" onclick="scrollAcademy('left')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <button class="nav-arrow" onclick="scrollAcademy('right')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <a href="#" class="section-link">Visit Crowd Academy</a>
+                    
+                    <div class="academy-courses" id="academyCourses">
+                        <div class="course-card">
+                            <div class="course-image">
+                                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Create Tickets Course">
+                            </div>
+                            <div class="course-meta">
+                                <span class="course-type">COURSE</span>
+                                <span class="course-duration">23 min</span>
+                            </div>
+                            <h4>Create Tickets</h4>
+                            <p>This guide will show you how to create and edit ticket types for your event.</p>
+                            <a href="#" class="course-link">View course</a>
+                        </div>
+                        
+                        <div class="course-card">
+                            <div class="course-image">
+                                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Getting Paid Course">
+                            </div>
+                            <div class="course-meta">
+                                <span class="course-type">COURSE</span>
+                                <span class="course-duration">7 min</span>
+                            </div>
+                            <h4>Getting Paid via Crowd</h4>
+                            <p>This guide will walk you through how to add a payout method to your event if you're selling tickets using Crowd's Payment Processing.</p>
+                            <a href="#" class="course-link">View course</a>
+                        </div>
+                        
+                        <div class="course-card">
+                            <div class="course-image">
+                                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Order Confirmation Course">
+                            </div>
+                            <div class="course-meta">
+                                <span class="course-type">COURSE</span>
+                                <span class="course-duration">14 min</span>
+                            </div>
+                            <h4>Order Confirmation</h4>
+                            <p>Communicate essential details about things like parking, checking in at the event, things to bring, and more.</p>
+                            <a href="#" class="course-link">View course</a>
+                        </div>
+                        
+                        <div class="course-card">
+                            <div class="course-image">
+                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Refund Policy Course">
+                            </div>
+                            <div class="course-meta">
+                                <span class="course-type">COURSE</span>
+                                <span class="course-duration">8 min</span>
+                            </div>
+                            <h4>Refund Policy</h4>
+                            <p>Learn how to set up and manage refund policies for your Crowd events.</p>
+                            <a href="#" class="course-link">View course</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Community Spotlight Section -->
+                <section class="spotlight-section">
+                    <div class="spotlight-header">
+                        <h2>Community spotlight</h2>
+                        <div class="spotlight-nav">
+                            <button class="nav-arrow" onclick="scrollSpotlight('left')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <button class="nav-arrow" onclick="scrollSpotlight('right')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="spotlight-content">
+                        <div class="spotlight-image">
+                            <img src="assets/prashant-spotlight.png" alt="Meet Prashant">
+                        </div>
+                        <div class="spotlight-text">
+                            <h3>Meet Prashant</h3>
+                            <blockquote>
+                                "As someone who completely relies on people buying tickets to [our] event to get the word out, Crowd plays a huge part in my business."
+                            </blockquote>
+                            <p class="spotlight-attribution">Prashant Kakad, Founder of Jai Ho! Dance Party and Bollywood Dreams Entertainment</p>
+                            <button class="spotlight-btn">Read article</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Help Section -->
+                <section class="help-section">
+                    <h2>How can we help?</h2>
+                    <a href="#" class="section-link">Go to Help Center</a>
+                    
+                    <div class="help-categories">
+                        <div class="help-category">
+                            <div class="help-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" x2="16" y1="2" y2="6"/>
+                                    <line x1="8" x2="8" y1="2" y2="6"/>
+                                    <line x1="3" x2="21" y1="10" y2="10"/>
+                                </svg>
+                            </div>
+                            <h4>Creating an event</h4>
+                        </div>
+                        
+                        <div class="help-category">
+                            <div class="help-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <h4>Your account</h4>
+                        </div>
+                        
+                        <div class="help-category">
+                            <div class="help-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                    <path d="M3 11l18-5v12L3 14v-3z"/>
+                                    <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+                                </div>
+                            <h4>Marketing an event</h4>
+                        </div>
+                        
+                        <div class="help-category">
+                            <div class="help-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                    <rect x="1" y="3" width="15" height="13"/>
+                                    <path d="M16 8h4a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-4"/>
+                                    <circle cx="9" cy="9" r="2"/>
+                                    <path d="M8 21v-4a4 4 0 0 0-4-4H2"/>
+                                </svg>
+                            </div>
+                            <h4>Payouts and taxes</h4>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!window.dataManager.isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            loadUserData();
+            updateChecklistStatus();
+            initializeDashboard();
+        });
+
+        function loadUserData() {
+            const currentUser = window.dataManager.getCurrentUser();
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update user display
+            const firstName = currentUser.firstName || 'User';
+            const initials = (currentUser.firstName.charAt(0) + currentUser.lastName.charAt(0)).toUpperCase();
+            
+            document.getElementById('userAvatar').textContent = initials;
+            document.getElementById('userName').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+            document.getElementById('welcomeTitle').textContent = `Oh hello, ${firstName}`;
+        }
+
+        function updateChecklistStatus() {
+            const currentUser = window.dataManager.getCurrentUser();
+            const userEvents = window.dataManager.getUserEvents();
+            
+            // Update checklist items based on user data
+            const checklistItems = document.querySelectorAll('.checklist-item');
+            
+            // Check if user has created events
+            if (userEvents.length > 0) {
+                const firstItem = checklistItems[0];
+                const statusBadge = firstItem.querySelector('.status-badge');
+                statusBadge.textContent = 'Complete';
+                statusBadge.className = 'status-badge complete';
+                firstItem.dataset.status = 'complete';
+            }
+            
+            // Check if profile is set up (basic check)
+            if (currentUser.profile && currentUser.profile.bio) {
+                const secondItem = checklistItems[1];
+                const statusBadge = secondItem.querySelector('.status-badge');
+                statusBadge.textContent = 'Complete';
+                statusBadge.className = 'status-badge complete';
+                secondItem.dataset.status = 'complete';
+            }
+        }
+
+        function initializeDashboard() {
+            // Initialize all interactive elements
+            setupEventListeners();
+            loadRecentActivity();
+            updateDashboardStats();
+        }
+
+        function setupEventListeners() {
+            // Add click handlers for checklist items
+            const checklistItems = document.querySelectorAll('.checklist-item');
+            checklistItems.forEach((item, index) => {
+                item.addEventListener('click', () => handleChecklistClick(index));
+            });
+
+            // Add handlers for action cards
+            document.querySelectorAll('.action-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const button = this.querySelector('.action-btn');
+                    if (button) {
+                        button.click();
+                    }
+                });
+            });
+        }
+
+        function handleChecklistClick(index) {
+            switch(index) {
+                case 0: // Create event
+                    window.location.href = 'events-calendar.html';
+                    break;
+                case 1: // Set up profile
+                    setupProfile();
+                    break;
+                case 2: // Add bank account
+                    alert('Bank account setup coming soon!');
+                    break;
+            }
+        }
+
+        function loadRecentActivity() {
+            const userEvents = window.dataManager.getUserEvents();
+            const recentEvents = userEvents.slice(-3); // Get last 3 events
+            
+            // Update dashboard with recent activity if needed
+            if (recentEvents.length > 0) {
+                // Could add a recent activity section here
+                console.log('Recent events:', recentEvents);
+            }
+        }
+
+        function updateDashboardStats() {
+            const userEvents = window.dataManager.getUserEvents();
+            const totalEvents = userEvents.length;
+            const publishedEvents = userEvents.filter(e => e.status === 'published').length;
+            const draftEvents = userEvents.filter(e => e.status === 'draft').length;
+            
+            // Update any stats displays if they exist
+            console.log(`Dashboard stats: ${totalEvents} total, ${publishedEvents} published, ${draftEvents} drafts`);
+        }
+
+        function setupProfile() {
+            // For now, show a simple profile setup modal
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+              <div class="modal-content" style="max-width: 500px;">
+                  <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                          <line x1="18" x2="6" y1="6" y2="18"/>
+                          <line x1="6" x2="18" y1="6" y2="18"/>
+                      </svg>
+                  </button>
+                  <div class="modal-header">
+                      <h2>Set Up Your Profile</h2>
+                      <p>Complete your organizer profile to build trust with attendees</p>
+                  </div>
+                  <form onsubmit="saveProfile(event)">
+                      <div style="margin-bottom: 16px;">
+                          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Bio</label>
+                          <textarea id="profileBio" placeholder="Tell people about yourself and your events..." 
+                                    style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; min-height: 100px; resize: vertical;"></textarea>
+                      </div>
+                      <div style="margin-bottom: 16px;">
+                          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Website</label>
+                          <input type="url" id="profileWebsite" placeholder="https://yourwebsite.com" 
+                                 style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px;">
+                      </div>
+                      <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                          <button type="button" onclick="this.closest('.modal-overlay').remove()" 
+                                  style="padding: 10px 20px; border: 1px solid #d1d5db; background: white; border-radius: 6px; cursor: pointer;">
+                              Cancel
+                          </button>
+                          <button type="submit" 
+                                  style="padding: 10px 20px; background: #f97316; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                              Save Profile
+                          </button>
+                      </div>
+                  </form>
+              </div>
+          `;
+          
+          document.body.appendChild(modal);
+          document.body.style.overflow = 'hidden';
+          
+          // Load existing profile data
+          const currentUser = window.dataManager.getCurrentUser();
+          if (currentUser.profile) {
+              document.getElementById('profileBio').value = currentUser.profile.bio || '';
+              document.getElementById('profileWebsite').value = currentUser.profile.website || '';
+          }
+      }
+
+      function saveProfile(event) {
+          event.preventDefault();
+          
+          const bio = document.getElementById('profileBio').value.trim();
+          const website = document.getElementById('profileWebsite').value.trim();
+          
+          try {
+              window.dataManager.updateProfile({
+                  bio: bio,
+                  website: website
+              });
+              
+              // Close modal
+              document.querySelector('.modal-overlay').remove();
+              document.body.style.overflow = 'auto';
+              
+              // Update checklist
+              updateChecklistStatus();
+              
+              // Show success message
+              showNotification('Profile updated successfully!', 'success');
+              
+          } catch (error) {
+              console.error('Profile update failed:', error);
+              showNotification('Failed to update profile. Please try again.', 'error');
+          }
+      }
+
+      function showNotification(message, type = 'info') {
+          const notification = document.createElement('div');
+          notification.className = `notification ${type}`;
+          notification.style.cssText = `
+              position: fixed;
+              top: 20px;
+              right: 20px;
+              background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+              color: white;
+              padding: 16px 24px;
+              border-radius: 8px;
+              box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+              z-index: 1000;
+              font-weight: 500;
+              max-width: 400px;
+              animation: slideIn 0.3s ease;
+          `;
+          notification.textContent = message;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+              notification.style.animation = 'slideOut 0.3s ease';
+              setTimeout(() => notification.remove(), 300);
+          }, 3000);
+      }
+
+      function scrollAcademy(direction) {
+          const container = document.getElementById('academyCourses');
+          const scrollAmount = 320; // Width of one card plus gap
+          
+          if (direction === 'left') {
+              container.scrollLeft -= scrollAmount;
+          } else {
+              container.scrollLeft += scrollAmount;
+          }
+      }
+
+      function scrollSpotlight(direction) {
+          // For now, just show alert since we have one spotlight item
+          showNotification('More community spotlights coming soon!', 'info');
+      }
+
+      function toggleUserMenu() {
+          const userMenu = document.querySelector('.user-menu');
+          const dropdown = document.createElement('div');
+          dropdown.className = 'user-dropdown';
+          dropdown.innerHTML = `
+              <div class="dropdown-item" onclick="window.location.href='dashboard-home.html'">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  </svg>
+                  Dashboard
+              </div>
+              <div class="dropdown-item" onclick="window.location.href='events-calendar.html'">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" x2="16" y1="2" y2="6"/>
+                      <line x1="8" x2="8" y1="2" y2="6"/>
+                      <line x1="3" x2="21" y1="10" y2="10"/>
+                  </svg>
+                  Events
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item" onclick="setupProfile()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                      <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  Profile Settings
+              </div>
+              <div class="dropdown-item" onclick="logoutUser()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                      <polyline points="16,17 21,12 16,7"/>
+                      <line x1="21" x2="9" y1="12" y2="12"/>
+                  </svg>
+                  Sign Out
+              </div>
+          `;
+          
+          // Position dropdown
+          dropdown.style.cssText = `
+              position: absolute;
+              top: 100%;
+              right: 0;
+              background: white;
+              border: 1px solid #e5e7eb;
+              border-radius: 8px;
+              box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+              padding: 8px 0;
+              min-width: 200px;
+              z-index: 1000;
+              margin-top: 8px;
+          `;
+          
+          userMenu.style.position = 'relative';
+          userMenu.appendChild(dropdown);
+          
+          // Close dropdown when clicking outside
+          setTimeout(() => {
+              document.addEventListener('click', function closeDropdown(e) {
+                  if (!userMenu.contains(e.target)) {
+                      dropdown.remove();
+                      document.removeEventListener('click', closeDropdown);
+                  }
+              });
+          }, 0);
+        }
+
+        function logoutUser() {
+            if (confirm('Are you sure you want to sign out?')) {
+                window.dataManager.logout();
+            }
+        }
+    </script>
+</body>
+</html>

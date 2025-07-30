@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Preview - Crowd</title>
+    <link rel="stylesheet" href="event-preview-styles.css">
+    <script src="js/data-manager.js"></script>
+</head>
+<body>
+    <div class="preview-container">
+        <!-- Header -->
+        <header class="preview-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <button class="exit-btn" onclick="window.location.href='organizer-dashboard.html'">
+                        ← Exit
+                    </button>
+                </div>
+                <div class="header-right">
+                    <div class="device-icons">
+                        <span>💻</span>
+                        <span>📱</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-content">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#f97316">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <span class="logo-text">crowd</span>
+                </div>
+                <div class="nav-search">
+                    <input type="text" placeholder="Search events">
+                </div>
+                <div class="nav-links">
+                    <a href="#">Browse Events</a>
+                    <a href="#">Create an event</a>
+                    <a href="#">Organize</a>
+                    <a href="#">Help</a>
+                    <span class="user-email" id="userEmail"></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Update Banner -->
+        <div class="update-banner">
+            <p>Need to make some updates? <a href="#" onclick="editCurrentEvent()">Edit event</a></p>
+        </div>
+
+        <!-- Event Content -->
+        <div class="event-content">
+            <div class="event-image">
+                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80" alt="Event" id="eventImage">
+            </div>
+
+            <div class="event-details">
+                <div class="event-main">
+                    <div class="event-badge" id="eventBadge">Just Added</div>
+                    <div class="event-date" id="eventDate"></div>
+                    <h1 class="event-title" id="eventTitle">Event Title</h1>
+                    <p class="event-description" id="eventDescription">
+                        Event description will appear here.
+                    </p>
+
+                    <div class="event-info-section">
+                        <h3>Date and time</h3>
+                        <div class="datetime-info">
+                            <span class="calendar-icon">📅</span>
+                            <span id="fullDateTime"></span>
+                        </div>
+                    </div>
+
+                    <div class="event-info-section">
+                        <h3>Location</h3>
+                        <p id="eventLocation">To be announced</p>
+                    </div>
+
+                    <div class="event-info-section">
+                        <h3>About this event</h3>
+                        <div id="eventOverview"></div>
+                    </div>
+
+                    <div class="event-info-section">
+                        <h3>Refund Policy</h3>
+                        <p>Contact the organizer to request a refund.</p>
+                    </div>
+                </div>
+
+                <div class="event-sidebar">
+                    <div class="ticket-info">
+                        <div class="price" id="ticketPrice">Free</div>
+                        <div class="event-time" id="sidebarDateTime">Date • Time<br>Timezone</div>
+                        <button class="get-tickets-btn" onclick="getTickets()">Get tickets</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-actions">
+                <button class="publish-btn" onclick="publishEvent()">Publish now</button>
+                <button class="edit-btn" onclick="editCurrentEvent()">Edit event</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentEventData = {};
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!window.dataManager.isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            loadUserData();
+            loadEventData();
+        });
+
+        function loadUserData() {
+            const currentUser = window.dataManager.getCurrentUser();
+            if (currentUser && currentUser.email) {
+                document.getElementById('userEmail').textContent = currentUser.email;
+            }
+        }
+
+        function loadEventData() {
+            // Try to get event data from localStorage
+            let eventData = JSON.parse(localStorage.getItem('editingEvent') || '{}');
+            
+            if (!eventData.id) {
+                // If no event data found, redirect back to dashboard
+                window.location.href = 'organizer-dashboard.html';
+                return;
+            }
+
+            // Get the latest event data from dataManager
+            const userEvent = window.dataManager.getEventById(eventData.id);
+            if (!userEvent) {
+                alert('Event not found or access denied.');
+                window.location.href = 'organizer-dashboard.html';
+                return;
+            }
+
+            currentEventData = userEvent;
+            displayEventData(userEvent);
+        }
+
+        function displayEventData(eventData) {
+            // Update title and description
+            document.getElementById('eventTitle').textContent = eventData.title || 'Untitled Event';
+            document.getElementById('eventDescription').textContent = 
+                eventData.description || `Join us for an exciting event: ${eventData.title}!`;
+            
+            // Format and display date
+            if (eventData.date) {
+                const eventDate = new Date(eventData.date);
+                const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+                document.getElementById('eventDate').textContent = eventDate.toLocaleDateString('en-US', options);
+                
+                // Format full date time
+                const startTime = eventData.startTime || '10:00';
+                const endTime = eventData.endTime || '12:00';
+                const dateStr = eventDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+                document.getElementById('fullDateTime').textContent = 
+                    `${dateStr} • ${formatTime(startTime)} - ${formatTime(endTime)} ${getTimezone()}`;
+                
+                // Sidebar date time
+                const shortDate = eventDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                document.getElementById('sidebarDateTime').innerHTML = 
+                    `${shortDate} • ${formatTime(startTime)}<br>${getTimezone()}`;
+            }
+            
+            // Location
+            if (eventData.location) {
+                document.getElementById('eventLocation').textContent = eventData.location;
+            }
+            
+            // Price - check if event has tickets
+            const tickets = JSON.parse(localStorage.getItem(`tickets_${eventData.id}`) || '[]');
+            if (tickets.length > 0) {
+                const minPrice = Math.min(...tickets.map(t => t.price || 0));
+                if (minPrice === 0) {
+                    document.getElementById('ticketPrice').textContent = 'Free';
+                } else {
+                    document.getElementById('ticketPrice').textContent = `From $${minPrice.toFixed(2)}`;
+                }
+            } else {
+                document.getElementById('ticketPrice').textContent = 'Free';
+            }
+
+            // Event overview
+            const overviewDiv = document.getElementById('eventOverview');
+            if (eventData.overviewDescription || eventData.whyAttend || eventData.howToParticipate) {
+                let overviewHTML = '';
+                
+                if (eventData.overviewDescription) {
+                    overviewHTML += `<p>${eventData.overviewDescription}</p>`;
+                }
+                
+                if (eventData.whyAttend) {
+                    overviewHTML += `<h4>Why attend this event?</h4><p>${eventData.whyAttend}</p>`;
+                }
+                
+                if (eventData.howToParticipate) {
+                    overviewHTML += `<h4>How to participate:</h4><p>${eventData.howToParticipate}</p>`;
+                }
+                
+                if (eventData.closingMessage) {
+                    overviewHTML += `<p>${eventData.closingMessage}</p>`;
+                }
+                
+                overviewDiv.innerHTML = overviewHTML;
+            } else {
+                overviewDiv.innerHTML = `<p>Welcome to ${eventData.title}! More details coming soon.</p>`;
+            }
+
+            // Update badge based on status
+            const badge = document.getElementById('eventBadge');
+            if (eventData.status === 'published') {
+                badge.textContent = 'Published';
+                badge.style.background = '#dcfce7';
+                badge.style.color = '#166534';
+            } else {
+                badge.textContent = 'Draft';
+                badge.style.background = '#f3f4f6';
+                badge.style.color = '#6b7280';
+            }
+        }
+
+        function formatTime(timeStr) {
+            if (!timeStr) return '';
+            const [hours, minutes] = timeStr.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+
+        function getTimezone() {
+            return Intl.DateTimeFormat().resolvedOptions().timeZone.split('/').pop() || 'Local';
+        }
+
+        function publishEvent() {
+            if (!currentEventData.id) {
+                alert('No event data found.');
+                return;
+            }
+
+            try {
+                // Update event status using data manager
+                const updatedEvent = window.dataManager.updateEvent(currentEventData.id, {
+                    status: 'published',
+                    publishedAt: new Date().toISOString()
+                });
+
+                currentEventData = updatedEvent;
+                
+                // Update local storage
+                localStorage.setItem('editingEvent', JSON.stringify(updatedEvent));
+                
+                alert('Event published successfully!');
+                
+                // Update the display
+                displayEventData(updatedEvent);
+                
+            } catch (error) {
+                console.error('Error publishing event:', error);
+                alert('Failed to publish event: ' + error.message);
+            }
+        }
+
+        function editCurrentEvent() {
+            if (currentEventData.id) {
+                localStorage.setItem('editingEvent', JSON.stringify(currentEventData));
+                window.location.href = 'event-editor.html';
+            } else {
+                alert('No event data found to edit.');
+            }
+        }
+
+        function getTickets() {
+            if (currentEventData.status === 'published') {
+                alert('Ticket purchasing system coming soon!');
+            } else {
+                alert('This event is not yet published. Please publish the event first.');
+            }
+        }
+    </script>
+</body>
+</html>

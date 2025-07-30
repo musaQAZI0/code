@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .dashboard-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .event-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .create-event-btn {
+            background-color: #f05537;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .create-event-btn:hover {
+            background-color: #ea580c;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Organizer Dashboard</h1>
+
+        <h2>Create New Event</h2>
+        <button class="create-event-btn" onclick="window.location.href='event-builder.html'">
+            + Create Event
+        </button>
+
+        <h2>Upcoming Events</h2>
+        <div id="upcoming-events">
+            <!-- Events will be dynamically added here -->
+        </div>
+
+        <script>
+            // Sample event data (replace with actual data from your backend)
+            const events = [
+                { id: 1, name: "Tech Conference 2024", date: "2024-03-15" },
+                { id: 2, name: "Marketing Summit", date: "2024-04-20" }
+            ];
+
+            function displayEvents() {
+                const upcomingEventsDiv = document.getElementById("upcoming-events");
+                upcomingEventsDiv.innerHTML = ""; // Clear existing content
+
+                events.forEach(event => {
+                    const eventCard = document.createElement("div");
+                    eventCard.classList.add("event-card");
+                    eventCard.innerHTML = `
+                        <h3>${event.name}</h3>
+                        <p>Date: ${event.date}</p>
+                        <button class="button" onclick="editEvent(${event.id})">Edit</button>
+                        <button class="button" onclick="deleteEvent(${event.id})">Delete</button>
+                    `;
+                    upcomingEventsDiv.appendChild(eventCard);
+                });
+            }
+
+            function editEvent(eventId) {
+                // Placeholder for edit functionality
+                console.log("Edit event:", eventId);
+                // Store the event ID in local storage
+                localStorage.setItem('editingEvent', eventId);
+                // Redirect to the event builder page
+                window.location.href = 'event-builder.html';
+            }
+
+            function deleteEvent(eventId) {
+                // Placeholder for delete functionality
+                console.log("Delete event:", eventId);
+                // Implement your delete logic here (e.g., API call)
+            }
+
+            function startEventFromScratch() {
+                // Clear any existing editing event
+                localStorage.removeItem('editingEvent');
+                // Redirect to event builder
+                window.location.href = 'event-builder.html';
+            }
+
+            // Initial display of events
+            displayEvents();
+        </script>
+    </div>
+</body>
+</html>

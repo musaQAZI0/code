@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reporting - Crowd</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="analytics-styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/data-manager.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <span class="logo-text">crowd</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="dashboard-home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+          </a>
+          <a href="events-calendar.html" class="nav-item">
+            <i class="fas fa-calendar"></i>
+          </a>
+          <a href="orders.html" class="nav-item">
+            <i class="fas fa-file-alt"></i>
+          </a>
+          <a href="marketing.html" class="nav-item">
+            <i class="fas fa-bullhorn"></i>
+          </a>
+          <a href="analytics.html" class="nav-item active">
+            <i class="fas fa-chart-bar"></i>
+          </a>
+          <a href="finance.html" class="nav-item">
+            <i class="fas fa-university"></i>
+          </a>
+          <a href="settings.html" class="nav-item">
+            <i class="fas fa-cog"></i>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="#" class="nav-item">
+            <i class="fas fa-th"></i>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-content">
+            <div class="logo-text">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#f97316">
+                <path
+                  d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                />
+              </svg>
+              <span>crowd</span>
+            </div>
+            <div class="header-right">
+              <button
+                class="create-btn"
+                onclick="window.location.href='event-builder.html'"
+              >
+                + Create
+              </button>
+              <div class="user-menu" onclick="toggleUserMenu()">
+                <div class="user-avatar" id="userAvatar">AA</div>
+                <span class="user-name" id="userName">abdul ahad</span>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M7 10l5 5 5-5z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content-area">
+          <!-- Empty State -->
+          <div class="empty-state" id="emptyState">
+            <div class="empty-illustration">
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                <!-- Ghost illustration matching the screenshot -->
+                <circle
+                  cx="60"
+                  cy="45"
+                  r="25"
+                  fill="none"
+                  stroke="#9ca3af"
+                  stroke-width="2"
+                />
+                <!-- Eyes -->
+                <circle cx="52" cy="40" r="2" fill="#9ca3af" />
+                <circle cx="68" cy="40" r="2" fill="#9ca3af" />
+                <!-- Mouth -->
+                <path
+                  d="M52 52 Q60 58 68 52"
+                  fill="none"
+                  stroke="#9ca3af"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <!-- Ghost body -->
+                <path
+                  d="M35 70 Q35 45 60 45 Q85 45 85 70 L85 95 Q82 92 79 95 Q76 98 73 95 Q70 92 67 95 Q64 98 61 95 Q58 92 55 95 Q52 98 49 95 Q46 92 43 95 Q40 98 37 95 Q35 92 35 95 Z"
+                  fill="none"
+                  stroke="#9ca3af"
+                  stroke-width="2"
+                />
+                <!-- Dotted lines below -->
+                <circle cx="45" cy="105" r="1" fill="#d1d5db" />
+                <circle cx="55" cy="108" r="1" fill="#d1d5db" />
+                <circle cx="65" cy="105" r="1" fill="#d1d5db" />
+                <circle cx="75" cy="108" r="1" fill="#d1d5db" />
+              </svg>
+            </div>
+            <h2>Nothing to report</h2>
+            <p>Your reports will be available after you sell some tickets.</p>
+          </div>
+
+          <!-- Analytics Dashboard -->
+          <div
+            class="analytics-dashboard"
+            id="analyticsDashboard"
+            style="display: none"
+          >
+            <!-- Page Header -->
+            <div class="page-header">
+              <h1>Reporting</h1>
+              <div class="header-controls">
+                <select class="time-filter" id="timeFilter">
+                  <option value="7">Last 7 days</option>
+                  <option value="30" selected>Last 30 days</option>
+                  <option value="90">Last 90 days</option>
+                  <option value="365">Last year</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+              <div class="summary-card">
+                <div class="card-header">
+                  <h3>Total Revenue</h3>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#10b981"
+                  >
+                    <path
+                      d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                    />
+                  </svg>
+                </div>
+                <div class="card-value" id="totalRevenue">$0</div>
+                <div class="card-change positive" id="revenueChange">
+                  +0% from last period
+                </div>
+              </div>
+
+              <div class="summary-card">
+                <div class="card-header">
+                  <h3>Tickets Sold</h3>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#3b82f6"
+                  >
+                    <path d="M9 12l2 2 4-4" />
+                    <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3" />
+                    <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3" />
+                  </svg>
+                </div>
+                <div class="card-value" id="totalTickets">0</div>
+                <div class="card-change positive" id="ticketsChange">
+                  +0% from last period
+                </div>
+              </div>
+
+              <div class="summary-card">
+                <div class="card-header">
+                  <h3>Total Events</h3>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#f59e0b"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" x2="16" y1="2" y2="6" />
+                    <line x1="8" x2="8" y1="2" y2="6" />
+                    <line x1="3" x2="21" y1="10" y2="10" />
+                  </svg>
+                </div>
+                <div class="card-value" id="totalEvents">0</div>
+                <div class="card-change neutral" id="eventsChange">
+                  0 published
+                </div>
+              </div>
+
+              <div class="summary-card">
+                <div class="card-header">
+                  <h3>Avg. Ticket Price</h3>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#8b5cf6"
+                  >
+                    <path d="M3 3v18h18" />
+                    <path d="M7 12l3-3 4 4 5-5" />
+                  </svg>
+                </div>
+                <div class="card-value" id="avgTicketPrice">$0</div>
+                <div class="card-change neutral" id="priceChange">
+                  Across all events
+                </div>
+              </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+              <!-- Sales by Month -->
+              <div class="chart-container">
+                <div class="chart-header">
+                  <h3>Sales by Month</h3>
+                  <select class="year-filter" id="yearFilter">
+                    <option value="2024">2024</option>
+                    <option value="2025" selected>2025</option>
+                  </select>
+                </div>
+                <div class="chart-wrapper">
+                  <canvas id="salesByMonthChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Top Performing Events -->
+              <div class="chart-container">
+                <div class="chart-header">
+                  <h3>Top Performing Events</h3>
+                  <div class="chart-controls">
+                    <button class="metric-toggle active" data-metric="tickets">
+                      Tickets
+                    </button>
+                    <button class="metric-toggle" data-metric="revenue">
+                      Revenue
+                    </button>
+                  </div>
+                </div>
+                <div class="chart-wrapper">
+                  <canvas id="topEventsChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Revenue Breakdown -->
+            <div class="charts-section">
+              <div class="chart-container">
+                <div class="chart-header">
+                  <h3>Revenue by Ticket Type</h3>
+                </div>
+                <div class="chart-wrapper">
+                  <canvas id="revenueBreakdownChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Event Performance Table -->
+              <div class="table-container">
+                <div class="table-header">
+                  <h3>Event Performance</h3>
+                  <div class="table-controls">
+                    <input
+                      type="text"
+                      placeholder="Search events..."
+                      class="search-input"
+                      id="eventSearch"
+                    />
+                    <select class="status-filter" id="statusFilter">
+                      <option value="">All Status</option>
+                      <option value="published">Published</option>
+                      <option value="draft">Draft</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="table-wrapper">
+                  <table class="events-table" id="eventsTable">
+                    <thead>
+                      <tr>
+                        <th>Event</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Tickets Sold</th>
+                        <th>Revenue</th>
+                        <th>Conversion</th>
+                      </tr>
+                    </thead>
+                    <tbody id="eventsTableBody">
+                      <!-- Table rows will be populated by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      let salesChart, topEventsChart, revenueChart;
+      let currentMetric = "tickets";
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check authentication
+        if (!window.dataManager.isAuthenticated()) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        loadUserData();
+        loadAnalytics();
+        setupEventListeners();
+      });
+
+      function loadUserData() {
+        const currentUser = window.dataManager.getCurrentUser();
+        if (currentUser) {
+          const initials = (
+            currentUser.firstName.charAt(0) + currentUser.lastName.charAt(0)
+          ).toUpperCase();
+          document.getElementById("userAvatar").textContent = initials;
+          document.getElementById(
+            "userName"
+          ).textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+        }
+      }
+
+      function loadAnalytics() {
+        const orders = window.dataManager.getOrdersForOrganizer();
+        const events = window.dataManager.getUserEvents();
+
+        if (
+          orders.length === 0 &&
+          events.filter((e) => e.status === "published").length === 0
+        ) {
+          showEmptyState();
+        } else {
+          showAnalyticsDashboard();
+          updateSummaryCards(orders, events);
+          createCharts(orders, events);
+          populateEventsTable(events, orders);
+        }
+      }
+
+      function showEmptyState() {
+        document.getElementById("emptyState").style.display = "flex";
+        document.getElementById("analyticsDashboard").style.display = "none";
+      }
+
+      function showAnalyticsDashboard() {
+        document.getElementById("emptyState").style.display = "none";
+        document.getElementById("analyticsDashboard").style.display = "block";
+      }
+
+      function updateSummaryCards(orders, events) {
+        const totalRevenue = orders.reduce(
+          (sum, order) => sum + order.total,
+          0
+        );
+        const totalTickets = orders.reduce(
+          (sum, order) => sum + order.ticketQuantity,
+          0
+        );
+        const publishedEvents = events.filter(
+          (e) => e.status === "published"
+        ).length;
+        const avgTicketPrice =
+          totalTickets > 0 ? totalRevenue / totalTickets : 0;
+
+        document.getElementById(
+          "totalRevenue"
+        ).textContent = `$${totalRevenue.toFixed(2)}`;
+        document.getElementById("totalTickets").textContent =
+          totalTickets.toLocaleString();
+        document.getElementById("totalEvents").textContent =
+          events.length.toString();
+        document.getElementById(
+          "avgTicketPrice"
+        ).textContent = `$${avgTicketPrice.toFixed(2)}`;
+
+        // Update change indicators (simplified for demo)
+        document.getElementById("revenueChange").textContent = `+${Math.floor(
+          Math.random() * 20
+        )}% from last period`;
+        document.getElementById("ticketsChange").textContent = `+${Math.floor(
+          Math.random() * 15
+        )}% from last period`;
+        document.getElementById(
+          "eventsChange"
+        ).textContent = `${publishedEvents} published`;
+        document.getElementById("priceChange").textContent =
+          "Across all events";
+      }
+
+      function createCharts(orders, events) {
+        createSalesByMonthChart(orders);
+        createTopEventsChart(orders, events);
+        createRevenueBreakdownChart(orders);
+      }
+
+      function createSalesByMonthChart(orders) {
+        const ctx = document
+          .getElementById("salesByMonthChart")
+          .getContext("2d");
+
+        // Group orders by month
+        const monthlyData = {};
+        const months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+
+        // Initialize all months with 0
+        months.forEach((month) => {
+          monthlyData[month] = { tickets: 0, revenue: 0 };
+        });
+
+        orders.forEach((order) => {
+          const date = new Date(order.orderDate);
+          const month = months[date.getMonth()];
+          monthlyData[month].tickets += order.ticketQuantity;
+          monthlyData[month].revenue += order.total;
+        });
+
+        const ticketData = months.map((month) => monthlyData[month].tickets);
+        const revenueData = months.map((month) => monthlyData[month].revenue);
+
+        if (salesChart) salesChart.destroy();
+
+        salesChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: months,
+            datasets: [
+              {
+                label: "Tickets Sold",
+                data: ticketData,
+                borderColor: "#3b82f6",
+                backgroundColor: "rgba(59, 130, 246, 0.1)",
+                tension: 0.4,
+                fill: true,
+              },
+              {
+                label: "Revenue ($)",
+                data: revenueData,
+                borderColor: "#10b981",
+                backgroundColor: "rgba(16, 185, 129, 0.1)",
+                tension: 0.4,
+                fill: true,
+                yAxisID: "y1",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "top",
+              },
+            },
+            scales: {
+              y: {
+                type: "linear",
+                display: true,
+                position: "left",
+                title: {
+                  display: true,
+                  text: "Tickets",
+                },
+              },
+              y1: {
+                type: "linear",
+                display: true,
+                position: "right",
+                title: {
+                  display: true,
+                  text: "Revenue ($)",
+                },
+                grid: {
+                  drawOnChartArea: false,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function createTopEventsChart(orders, events) {
+        const ctx = document.getElementById("topEventsChart").getContext("2d");
+
+        // Group orders by event
+        const eventData = {};
+        orders.forEach((order) => {
+          if (!eventData[order.eventTitle]) {
+            eventData[order.eventTitle] = { tickets: 0, revenue: 0 };
+          }
+          eventData[order.eventTitle].tickets += order.ticketQuantity;
+          eventData[order.eventTitle].revenue += order.total;
+        });
+
+        // Sort by current metric and take top 5
+        const sortedEvents = Object.entries(eventData)
+          .sort((a, b) => b[1][currentMetric] - a[1][currentMetric])
+          .slice(0, 5);
+
+        const labels = sortedEvents.map(([title]) =>
+          title.length > 20 ? title.substring(0, 20) + "..." : title
+        );
+        const data = sortedEvents.map(([, data]) => data[currentMetric]);
+
+        if (topEventsChart) topEventsChart.destroy();
+
+        topEventsChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label:
+                  currentMetric === "tickets" ? "Tickets Sold" : "Revenue ($)",
+                data: data,
+                backgroundColor: "#f97316",
+                borderColor: "#ea580c",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: currentMetric === "tickets" ? "Tickets" : "Revenue ($)",
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function createRevenueBreakdownChart(orders) {
+        const ctx = document
+          .getElementById("revenueBreakdownChart")
+          .getContext("2d");
+
+        // Group by ticket type
+        const ticketTypeData = {};
+        orders.forEach((order) => {
+          if (!ticketTypeData[order.ticketType]) {
+            ticketTypeData[order.ticketType] = 0;
+          }
+          ticketTypeData[order.ticketType] += order.total;
+        });
+
+        const labels = Object.keys(ticketTypeData);
+        const data = Object.values(ticketTypeData);
+        const colors = ["#f97316", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6"];
+
+        if (revenueChart) revenueChart.destroy();
+
+        revenueChart = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                data: data,
+                backgroundColor: colors.slice(0, labels.length),
+                borderWidth: 2,
+                borderColor: "#ffffff",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  padding: 20,
+                  usePointStyle: true,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function populateEventsTable(events, orders) {
+        const tbody = document.getElementById("eventsTableBody");
+        tbody.innerHTML = "";
+
+        events.forEach((event) => {
+          const eventOrders = orders.filter((o) => o.eventId === event.id);
+          const ticketsSold = eventOrders.reduce(
+            (sum, o) => sum + o.ticketQuantity,
+            0
+          );
+          const revenue = eventOrders.reduce((sum, o) => sum + o.total, 0);
+          const conversion =
+            event.tickets && event.tickets.length > 0
+              ? (
+                  (ticketsSold /
+                    event.tickets.reduce((sum, t) => sum + t.quantity, 0)) *
+                  100
+                ).toFixed(1)
+              : "0.0";
+
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                    <td>
+                        <div class="event-cell">
+                            <div class="event-title">${event.title}</div>
+                            <div class="event-location">${
+                              event.location || "Location TBD"
+                            }</div>
+                        </div>
+                    </td>
+                    <td>${new Date(event.date).toLocaleDateString()}</td>
+                    <td>
+                        <span class="status-badge ${event.status}">
+                            ${
+                              event.status.charAt(0).toUpperCase() +
+                              event.status.slice(1)
+                            }
+                        </span>
+                    </td>
+                    <td>${ticketsSold}</td>
+                    <td>$${revenue.toFixed(2)}</td>
+                    <td>${conversion}%</td>
+                `;
+          tbody.appendChild(row);
+        });
+      }
+
+      function setupEventListeners() {
+        // Time filter
+        document
+          .getElementById("timeFilter")
+          .addEventListener("change", function () {
+            loadAnalytics();
+          });
+
+        // Year filter
+        document
+          .getElementById("yearFilter")
+          .addEventListener("change", function () {
+            loadAnalytics();
+          });
+
+        // Metric toggle for top events
+        document.querySelectorAll(".metric-toggle").forEach((button) => {
+          button.addEventListener("click", function () {
+            document
+              .querySelectorAll(".metric-toggle")
+              .forEach((b) => b.classList.remove("active"));
+            this.classList.add("active");
+            currentMetric = this.dataset.metric;
+
+            const orders = window.dataManager.getOrdersForOrganizer();
+            const events = window.dataManager.getUserEvents();
+            createTopEventsChart(orders, events);
+          });
+        });
+
+        // Search and filter for events table
+        document
+          .getElementById("eventSearch")
+          .addEventListener("input", filterEventsTable);
+        document
+          .getElementById("statusFilter")
+          .addEventListener("change", filterEventsTable);
+      }
+
+      function filterEventsTable() {
+        const searchTerm = document
+          .getElementById("eventSearch")
+          .value.toLowerCase();
+        const statusFilter = document.getElementById("statusFilter").value;
+        const rows = document.querySelectorAll("#eventsTableBody tr");
+
+        rows.forEach((row) => {
+          const eventTitle = row
+            .querySelector(".event-title")
+            .textContent.toLowerCase();
+          const status = row
+            .querySelector(".status-badge")
+            .textContent.toLowerCase();
+
+          const matchesSearch = eventTitle.includes(searchTerm);
+          const matchesStatus =
+            !statusFilter || status.includes(statusFilter.toLowerCase());
+
+          row.style.display = matchesSearch && matchesStatus ? "" : "none";
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Event - Crowd</title>
+    <link rel="stylesheet" href="event-builder-styles.css">
+    <script src="js/data-manager.js"></script>
+</head>
+<body>
+    <div class="builder-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="back-link">
+                    <a href="dashboard-home.html">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                        Back to events
+                    </a>
+                </div>
+                
+                <div class="event-summary">
+                    <div class="event-image-placeholder"></div>
+                    <h2 id="eventTitleSidebar">Event Title</h2>
+                    <div class="event-datetime">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" x2="16" y1="2" y2="6"/>
+                            <line x1="8" x2="8" y1="2" y2="6"/>
+                            <line x1="3" x2="21" y1="10" y2="10"/>
+                        </svg>
+                        <span id="eventDateTimeSidebar">Mon, Sep 1, 2025, 10:00 AM</span>
+                    </div>
+                    
+                    <select class="status-select" id="eventStatus">
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                    </select>
+                    
+                    <a href="#" class="preview-link" onclick="previewEvent()">Preview ↗</a>
+                </div>
+
+                <div class="steps-section">
+                    <h3>Steps</h3>
+                    <div class="step-item active" id="buildStep">
+                        <div class="step-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h4>Build event page</h4>
+                            <p>Add all of your event details and let attendees know what to expect</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item" id="ticketsStep" onclick="goToTickets()" style="cursor: pointer;">
+                        <div class="step-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h4>Add tickets</h4>
+                            <p>Use our suggestions to help sell more tickets or manually create your own</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item" id="publishStep" onclick="goToPublish()" style="cursor: pointer;">
+                        <div class="step-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h4>Publish</h4>
+                            <p>Review your event page and settings, then publish your event</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <div class="dashboard-toggle">
+                        <span>Dashboard</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#f05537">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span>crowd</span>
+                    </div>
+                    <div class="header-right">
+                        <button class="preview-btn" onclick="previewEvent()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            Preview Your Event
+                        </button>
+                        <button class="publish-btn" onclick="goToPublish()">Publish</button>
+                        <div class="more-dropdown">
+                            <button class="more-btn">
+                                More
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M7 10l5 5 5-5z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="user-menu">
+                            <div class="user-avatar" id="userAvatar">AA</div>
+                            <span class="user-name" id="userName">abdul ahad</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 10l5 5 5-5z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area" id="contentArea">
+                <!-- Build Event Page Content -->
+                <div class="build-content" id="buildContent">
+                    <div class="content-header">
+                        <p class="content-subtitle">A short and sweet sentence about your event.</p>
+                    </div>
+                    
+                    <div class="main-form">
+                        <!-- Event Image Upload -->
+                        <div class="image-upload-section">
+                            <div class="image-upload-area" onclick="uploadImage()">
+                                <div class="upload-placeholder" id="uploadPlaceholder">
+                                    <div class="upload-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#3b82f6">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                            <polyline points="7,10 12,15 17,10"/>
+                                            <line x1="12" x2="12" y1="15" y2="3"/>
+                                        </svg>
+                                    </div>
+                                    <h3>Upload photos and video</h3>
+                                </div>
+                                <img id="eventImage" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                            </div>
+                            <div class="image-controls">
+                                <div class="image-dots">
+                                    <span class="dot active"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event Title -->
+                        <div class="title-section">
+                            <div class="add-button">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                    <line x1="12" x2="12" y1="5" y2="19"/>
+                                    <line x1="5" x2="19" y1="12" y2="12"/>
+                                </svg>
+                            </div>
+                            <h1 contenteditable="true" class="event-title" id="eventTitle" data-placeholder="Enter event title">Event Title</h1>
+                        </div>
+
+                        <!-- Date and Time / Location Section -->
+                        <div class="details-grid">
+                            <div class="details-section">
+                                <div class="section-header">
+                                    <h3>Date and time</h3>
+                                    <div class="add-button">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                            <line x1="12" x2="12" y1="5" y2="19"/>
+                                            <line x1="5" x2="19" y1="12" y2="12"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <!-- Date and Time Inputs -->
+                                <div class="datetime-inputs">
+                                    <div class="input-group">
+                                        <label for="eventDate">Date</label>
+                                        <input type="date" id="eventDate" class="date-input">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="startTime">Start Time</label>
+                                        <input type="time" id="startTime" class="time-input">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="endTime">End Time</label>
+                                        <input type="time" id="endTime" class="time-input">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="details-section">
+                                <div class="section-header">
+                                    <h3>Location</h3>
+                                    <div class="add-button">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                            <line x1="12" x2="12" y1="5" y2="19"/>
+                                            <line x1="5" x2="19" y1="12" y2="12"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="location-display">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                    <div class="location-text">
+                                        <input type="text" class="location-input" id="locationInput" placeholder="Enter a location">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Overview Section -->
+                        <div class="overview-section">
+                            <div class="section-header">
+                                <h3>Overview</h3>
+                                <div class="add-button">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                        <line x1="12" x2="12" y1="5" y2="19"/>
+                                        <line x1="5" x2="19" y1="12" y2="12"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <textarea class="overview-description" id="overviewDescription" placeholder="Use this section to provide more details about your event. You can include things to know, venue information, accessibility options—anything that will help people know what to expect."></textarea>
+                        </div>
+
+                        <!-- Good to Know Section -->
+                        <div class="good-to-know-section">
+                            <div class="section-header">
+                                <h3>Good to know</h3>
+                                <div class="add-button">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6">
+                                        <line x1="12" x2="12" y1="5" y2="19"/>
+                                        <line x1="5" x2="19" y1="12" y2="12"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div class="highlights-section">
+                                <h4>Highlights</h4>
+                                <div class="highlight-buttons">
+                                    <button class="highlight-btn" onclick="addHighlight('age')">+ Add Age info</button>
+                                    <button class="highlight-btn" onclick="addHighlight('door')">+ Add Door Time</button>
+                                    <button class="highlight-btn" onclick="addHighlight('parking')">+ Add Parking info</button>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-section">
+                                <h4>Frequently asked questions</h4>
+                                <div class="faq-tip">
+                                    <span class="tip-icon">💡</span>
+                                    <span>Events with FAQs have 8% more organic traffic</span>
+                                </div>
+                                <button class="add-question-btn" onclick="addFAQ()">+ Add question</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="save-section">
+                <button class="save-btn" onclick="saveAndContinue()">Save and continue</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Hidden file input for image upload -->
+    <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+
+    <script>
+        let currentEventData = {
+            id: null,
+            title: '',
+            date: '2025-09-01',
+            startTime: '10:00',
+            endTime: '12:00',
+            location: '',
+            description: '',
+            image: null,
+            status: 'draft',
+            category: 'Other',
+            subcategory: '',
+            tags: [],
+            tickets: [],
+            attendees: [],
+            refundPolicy: 'allow',
+            visibility: 'public'
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking authentication...');
+            
+            // Check if data manager is available
+            if (!window.dataManager) {
+                console.error('Data manager not available');
+                alert('Application not properly loaded. Please refresh the page.');
+                return;
+            }
+
+            if (!window.dataManager.isAuthenticated()) {
+                console.log('User not authenticated, redirecting to login');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            console.log('User authenticated, loading data...');
+            loadUserData();
+            loadEventData();
+            initializeEventHandlers();
+        });
+
+        function loadUserData() {
+            try {
+                const currentUser = window.dataManager.getCurrentUser();
+                if (currentUser) {
+                    const initials = (currentUser.firstName.charAt(0) + currentUser.lastName.charAt(0)).toUpperCase();
+                    document.getElementById('userAvatar').textContent = initials;
+                    document.getElementById('userName').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+                    console.log('User data loaded:', currentUser.firstName, currentUser.lastName);
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        function loadEventData() {
+            try {
+                const editingEvent = JSON.parse(localStorage.getItem('editingEvent') || '{}');
+                console.log('Loaded editing event:', editingEvent);
+                
+                if (editingEvent.id) {
+                    currentEventData = { ...currentEventData, ...editingEvent };
+                    populateFields();
+                    console.log('Event data loaded from localStorage');
+                } else {
+                    // Create new event ID
+                    currentEventData.id = window.dataManager.generateEventId();
+                    console.log('New event created with ID:', currentEventData.id);
+                }
+            } catch (error) {
+                console.error('Error loading event data:', error);
+                // Create new event ID as fallback
+                currentEventData.id = window.dataManager.generateEventId();
+            }
+        }
+
+        function populateFields() {
+            try {
+                // Handle title - only set if it's not empty
+                if (currentEventData.title && currentEventData.title.trim() !== '') {
+                    document.getElementById('eventTitle').textContent = currentEventData.title;
+                    document.getElementById('eventTitleSidebar').textContent = currentEventData.title;
+                } else {
+                    // Clear the placeholder text for new events
+                    document.getElementById('eventTitle').textContent = '';
+                    document.getElementById('eventTitleSidebar').textContent = 'Event Title';
+                }
+                
+                document.getElementById('locationInput').value = currentEventData.location || '';
+                
+                // Handle description - only set if it's not empty
+                if (currentEventData.description && currentEventData.description.trim() !== '') {
+                    document.getElementById('overviewDescription').value = currentEventData.description;
+                } else {
+                    document.getElementById('overviewDescription').value = '';
+                }
+                
+                document.getElementById('eventStatus').value = currentEventData.status || 'draft';
+                
+                // Set date and time inputs
+                document.getElementById('eventDate').value = currentEventData.date;
+                document.getElementById('startTime').value = currentEventData.startTime;
+                document.getElementById('endTime').value = currentEventData.endTime;
+                
+                if (currentEventData.image) {
+                    document.getElementById('uploadPlaceholder').style.display = 'none';
+                    document.getElementById('eventImage').src = currentEventData.image;
+                    document.getElementById('eventImage').style.display = 'block';
+                    document.querySelector('.event-image-placeholder').style.backgroundImage = `url(${currentEventData.image})`;
+                    document.querySelector('.event-image-placeholder').style.backgroundSize = 'cover';
+                }
+                
+                updateSidebarDateTime();
+                console.log('Fields populated successfully');
+            } catch (error) {
+                console.error('Error populating fields:', error);
+            }
+        }
+
+        function updateSidebarDateTime() {
+            try {
+                const date = new Date(currentEventData.date);
+                const startTime = formatTime(currentEventData.startTime);
+                
+                const sidebarDisplay = date.toLocaleDateString('en-US', { 
+                    weekday: 'short', 
+                    month: 'short', 
+                    day: 'numeric',
+                    year: 'numeric'
+                }) + `, ${startTime}`;
+                document.getElementById('eventDateTimeSidebar').textContent = sidebarDisplay;
+            } catch (error) {
+                console.error('Error updating sidebar date time:', error);
+            }
+        }
+
+        function formatTime(timeStr) {
+            try {
+                const [hours, minutes] = timeStr.split(':');
+                const hour = parseInt(hours);
+                const ampm = hour >= 12 ? 'PM' : 'AM';
+                const displayHour = hour % 12 || 12;
+                return `${displayHour}${minutes !== '00' ? ':' + minutes : ''}${ampm}`;
+            } catch (error) {
+                console.error('Error formatting time:', error);
+                return timeStr;
+            }
+        }
+
+        function initializeEventHandlers() {
+            try {
+                // Title editing with placeholder handling
+                const titleElement = document.getElementById('eventTitle');
+                
+                titleElement.addEventListener('focus', function() {
+                    if (this.textContent === 'Event Title') {
+                        this.textContent = '';
+                    }
+                });
+                
+                titleElement.addEventListener('blur', function() {
+                    const title = this.textContent.trim();
+                    if (title === '') {
+                        this.textContent = 'Event Title';
+                        currentEventData.title = '';
+                    } else {
+                        currentEventData.title = title;
+                        document.getElementById('eventTitleSidebar').textContent = title;
+                    }
+                    console.log('Title updated:', currentEventData.title);
+                });
+
+                titleElement.addEventListener('input', function() {
+                    const title = this.textContent.trim();
+                    if (title !== 'Event Title') {
+                        currentEventData.title = title;
+                        document.getElementById('eventTitleSidebar').textContent = title || 'Event Title';
+                    }
+                });
+
+                // Location input
+                document.getElementById('locationInput').addEventListener('input', function() {
+                    currentEventData.location = this.value;
+                    console.log('Location updated:', this.value);
+                });
+
+                // Overview description
+                document.getElementById('overviewDescription').addEventListener('input', function() {
+                    currentEventData.description = this.value;
+                    console.log('Description updated');
+                });
+
+                // Status change
+                document.getElementById('eventStatus').addEventListener('change', function() {
+                    currentEventData.status = this.value;
+                    console.log('Status updated:', this.value);
+                });
+
+                // Date and time inputs
+                document.getElementById('eventDate').addEventListener('change', function() {
+                    currentEventData.date = this.value;
+                    updateSidebarDateTime();
+                });
+
+                document.getElementById('startTime').addEventListener('change', function() {
+                    currentEventData.startTime = this.value;
+                    updateSidebarDateTime();
+                });
+
+                document.getElementById('endTime').addEventListener('change', function() {
+                    currentEventData.endTime = this.value;
+                });
+
+                console.log('Event handlers initialized');
+            } catch (error) {
+                console.error('Error initializing event handlers:', error);
+            }
+        }
+
+        function uploadImage() {
+            document.getElementById('imageInput').click();
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+                    currentEventData.image = imageUrl;
+                    
+                    document.getElementById('uploadPlaceholder').style.display = 'none';
+                    document.getElementById('eventImage').src = imageUrl;
+                    document.getElementById('eventImage').style.display = 'block';
+                    
+                    // Update the sidebar image as well
+                    document.querySelector('.event-image-placeholder').style.backgroundImage = `url(${imageUrl})`;
+                    document.querySelector('.event-image-placeholder').style.backgroundSize = 'cover';
+                    
+                    console.log('Image uploaded successfully');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function addHighlight(type) {
+            alert(`Add ${type} info feature coming soon!`);
+        }
+
+        function addFAQ() {
+            alert('Add FAQ feature coming soon!');
+        }
+
+        function saveEventData() {
+            try {
+                console.log('Saving event data...', currentEventData);
+                
+                // Get current user for organizer info
+                const currentUser = window.dataManager.getCurrentUser();
+                if (currentUser) {
+                    currentEventData.organizerId = currentUser.id;
+                    currentEventData.organizerName = `${currentUser.firstName} ${currentUser.lastName}`;
+                }
+                
+                let savedEvent;
+                
+                // Check if event already exists in data manager
+                const existingEvent = window.dataManager.getEvent(currentEventData.id);
+                
+                if (existingEvent) {
+                    // Update existing event
+                    console.log('Updating existing event...');
+                    savedEvent = window.dataManager.updateEvent(currentEventData.id, currentEventData);
+                } else {
+                    // Create new event
+                    console.log('Creating new event...');
+                    savedEvent = window.dataManager.createEvent(currentEventData);
+                    currentEventData = savedEvent; // Update with returned data
+                }
+                
+                // Save to localStorage for cross-page persistence
+                localStorage.setItem('editingEvent', JSON.stringify(currentEventData));
+                
+                console.log('Event saved successfully:', savedEvent);
+                return true;
+                
+            } catch (error) {
+                console.error('Failed to save event:', error);
+                alert('Failed to save event: ' + error.message);
+                return false;
+            }
+        }
+
+        function saveAndContinue() {
+            console.log('Save and continue clicked');
+            
+            // Validate required fields
+            if (!currentEventData.title || currentEventData.title.trim() === '') {
+                alert('Please enter an event title before continuing.');
+                document.getElementById('eventTitle').focus();
+                return;
+            }
+            
+            // Save the event data
+            const saved = saveEventData();
+            
+            if (saved) {
+                // Mark build step as completed
+                const buildStep = document.getElementById('buildStep');
+                if (buildStep) {
+                    buildStep.classList.add('completed');
+                    buildStep.classList.remove('active');
+                    const stepIcon = buildStep.querySelector('.step-icon');
+                    if (stepIcon) {
+                        stepIcon.innerHTML = `
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                        `;
+                    }
+                }
+                
+                // Navigate to tickets page
+                console.log('Navigating to add-tickets.html');
+                window.location.href = 'add-tickets.html';
+            }
+        }
+
+        function previewEvent() {
+            console.log('Preview event clicked');
+            saveEventData();
+            window.location.href = 'event-preview.html';
+        }
+
+        function goToPublish() {
+            console.log('Go to publish clicked');
+            saveEventData();
+            window.location.href = 'publish-event.html';
+        }
+
+        function goToTickets() {
+            console.log('Go to tickets clicked');
+            saveEventData();
+            window.location.href = 'add-tickets.html';
+        }
+
+        // Auto-save functionality (optional)
+        let autoSaveTimeout;
+        function scheduleAutoSave() {
+            clearTimeout(autoSaveTimeout);
+            autoSaveTimeout = setTimeout(() => {
+                console.log('Auto-saving...');
+                saveEventData();
+            }, 2000); // Auto-save after 2 seconds of inactivity
+        }
+
+        // Add auto-save to input handlers
+        document.addEventListener('input', scheduleAutoSave);
+
+        // Global error handler for debugging
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error);
+        });
+
+        // Debug function to check data manager state
+        function debugDataManager() {
+            console.log('Data Manager State:');
+            console.log('- Authenticated:', window.dataManager.isAuthenticated());
+            console.log('- Current User:', window.dataManager.getCurrentUser());
+            console.log('- All Events:', window.dataManager.getAllEvents());
+            console.log('- Current Event Data:', currentEventData);
+        }
+
+        // Make debug function available globally
+        window.debugDataManager = debugDataManager;
+    </script>
+</body>
+</html>

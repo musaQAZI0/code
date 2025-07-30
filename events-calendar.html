@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events - Crowd</title>
+    <link rel="stylesheet" href="events-calendar-styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="js/data-manager.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-content">
+          <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#f97316">
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              />
+            </svg>
+          </div>
+
+          <aside class="sidebar">
+            <div class="sidebar-header">
+              <div class="logo">
+                <span class="logo-text">crowd</span>
+              </div>
+            </div>
+
+            <nav class="sidebar-nav">
+              <a href="dashboard-home.html" class="nav-item">
+                <i class="fas fa-home"></i>
+              </a>
+              <a href="events-calendar.html" class="nav-item active">
+                <i class="fas fa-calendar"></i>
+              </a>
+              <a href="orders.html" class="nav-item">
+                <i class="fas fa-file-alt"></i>
+              </a>
+              <a href="marketing.html" class="nav-item">
+                <i class="fas fa-bullhorn"></i>
+              </a>
+              <a href="analytics.html" class="nav-item">
+                <i class="fas fa-chart-bar"></i>
+              </a>
+              <a href="finance.html" class="nav-item">
+                <i class="fas fa-university"></i>
+              </a>
+              <a href="settings.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+              </a>
+            </nav>
+
+            <div class="sidebar-footer">
+              <a href="#" class="nav-item">
+                <i class="fas fa-th"></i>
+              </a>
+              <a href="#" class="nav-item">
+                <i class="fas fa-question-circle"></i>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-content">
+            <div class="logo-text">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#f97316">
+                <path
+                  d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                />
+              </svg>
+              <span>crowd</span>
+            </div>
+            <div class="header-right">
+              <button
+                class="create-btn"
+                onclick="window.location.href='event-builder.html'"
+              >
+                + Create
+              </button>
+              <div class="user-menu" onclick="toggleUserMenu()">
+                <div class="user-avatar" id="userAvatar">AA</div>
+                <span class="user-name" id="userName">abdul ahad</span>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M7 10l5 5 5-5z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Events Content -->
+        <div class="events-content">
+          <div class="events-header">
+            <h1>Events</h1>
+          </div>
+
+          <div class="events-tabs">
+            <button class="tab-btn active" onclick="switchTab('events')">
+              Events
+            </button>
+            <button class="tab-btn" onclick="switchTab('collections')">
+              Collections
+            </button>
+          </div>
+
+          <div class="events-controls">
+            <div class="search-container">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              <input
+                type="text"
+                placeholder="Search events"
+                class="search-input"
+                id="searchInput"
+              />
+            </div>
+
+            <div class="view-controls">
+              <button
+                class="view-btn"
+                onclick="switchView('list')"
+                id="listViewBtn"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <line x1="8" x2="21" y1="6" y2="6" />
+                  <line x1="8" x2="21" y1="12" y2="12" />
+                  <line x1="8" x2="21" y1="18" y2="18" />
+                  <line x1="3" x2="3.01" y1="6" y2="6" />
+                  <line x1="3" x2="3.01" y1="12" y2="12" />
+                  <line x1="3" x2="3.01" y1="18" y2="18" />
+                </svg>
+                List
+              </button>
+              <button
+                class="view-btn active"
+                onclick="switchView('calendar')"
+                id="calendarViewBtn"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" x2="16" y1="2" y2="6" />
+                  <line x1="8" x2="8" y1="2" y2="6" />
+                  <line x1="3" x2="21" y1="10" y2="10" />
+                </svg>
+                Calendar
+              </button>
+
+              <div class="filter-dropdown">
+                <button class="filter-btn" onclick="toggleFilterDropdown()">
+                  <span id="filterText">All events</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z" />
+                  </svg>
+                </button>
+                <div class="filter-dropdown-menu" id="filterDropdown">
+                  <div
+                    class="filter-option active"
+                    onclick="selectFilter('all')"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M9 12l2 2 4-4" />
+                      <circle cx="12" cy="12" r="10" />
+                    </svg>
+                    All events
+                  </div>
+                  <div class="filter-option" onclick="selectFilter('upcoming')">
+                    Upcoming events
+                  </div>
+                  <div class="filter-option" onclick="selectFilter('draft')">
+                    Draft
+                  </div>
+                  <div class="filter-option" onclick="selectFilter('past')">
+                    Past events
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="create-event-btn" onclick="openCreateEventModal()">
+              Create Event
+            </button>
+          </div>
+
+          <!-- Showcase Banner -->
+          <div class="showcase-banner" id="showcaseBanner">
+            <div class="showcase-content">
+              <div class="showcase-icon">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M3 11l18-5v12L3 14v-3z" />
+                  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+                </svg>
+              </div>
+              <div class="showcase-text">
+                <h3>
+                  Showcase your artist lineup <span class="new-badge">NEW</span>
+                </h3>
+                <p>
+                  Add headliners and artist pages to your event listings to
+                  build hype and trust. Plus, your events can get auto-posted to
+                  Spotify, Bandsintown, and more.
+                </p>
+                <div class="showcase-actions">
+                  <a href="#" class="add-lineup-btn">Add your lineup now</a>
+                  <a href="#" class="learn-more-btn">Learn more</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calendar View -->
+          <div class="calendar-view" id="calendarView">
+            <div class="calendar-header">
+              <div class="calendar-nav">
+                <span class="today-btn" onclick="goToToday()">Today</span>
+                <div class="month-nav">
+                  <button class="nav-arrow" onclick="previousMonth()">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                  </button>
+                  <h2 class="current-month" id="currentMonth">July 2025</h2>
+                  <button class="nav-arrow" onclick="nextMonth()">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="view-toggle">
+                <button
+                  class="toggle-btn active"
+                  onclick="setCalendarView('month')"
+                >
+                  Month
+                </button>
+                <button class="toggle-btn" onclick="setCalendarView('week')">
+                  Week
+                </button>
+              </div>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid">
+              <!-- Calendar will be generated here -->
+            </div>
+          </div>
+
+          <!-- List View -->
+          <div class="list-view" id="listView" style="display: none">
+            <div class="events-table">
+              <div class="table-header">
+                <div class="col-event">Event</div>
+                <div class="col-sold">Sold</div>
+                <div class="col-gross">Gross</div>
+                <div class="col-status">Status</div>
+                <div class="col-actions"></div>
+              </div>
+              <div class="events-list" id="eventsList">
+                <!-- Events will be loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div class="modal-overlay" id="createEventModal" style="display: none">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeCreateEventModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <line x1="18" x2="6" y1="6" y2="18" />
+            <line x1="6" x2="18" y1="6" y2="18" />
+          </svg>
+        </button>
+
+        <div class="modal-header">
+          <h2>How do you want to build your event?</h2>
+        </div>
+
+        <div class="creation-options">
+          <div class="creation-option" onclick="createFromScratch()">
+            <div class="option-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#3b82f6">
+                <path
+                  d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                />
+                <path
+                  d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                />
+              </svg>
+            </div>
+            <h3>Start from scratch</h3>
+            <p>
+              Add all your event details, create new tickets, and set up
+              recurring events
+            </p>
+          </div>
+
+          <div class="creation-option" onclick="createWithAI()">
+            <div class="option-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#3b82f6">
+                <path
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+            </div>
+            <h3>Create my event faster with AI</h3>
+            <p>
+              Answer a few quick questions to generate an event that's ready to
+              publish almost instantly
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div class="modal-overlay" id="eventDetailsModal" style="display: none">
+      <div class="modal-content event-details-modal">
+        <button class="modal-close" onclick="closeEventDetailsModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <line x1="18" x2="6" y1="6" y2="18" />
+            <line x1="6" x2="18" y1="6" y2="18" />
+          </svg>
+        </button>
+
+        <div class="event-details-content" id="eventDetailsContent">
+          <!-- Event details will be populated here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Ticket Purchase Modal -->
+    <div class="modal-overlay" id="ticketPurchaseModal" style="display: none">
+      <div class="modal-content ticket-purchase-modal">
+        <button class="modal-close" onclick="closeTicketPurchaseModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <line x1="18" x2="6" y1="6" y2="18" />
+            <line x1="6" x2="18" y1="6" y2="18" />
+          </svg>
+        </button>
+
+        <div class="ticket-purchase-content">
+          <div class="purchase-header">
+            <h2 id="purchaseEventTitle">Event Title</h2>
+            <p id="purchaseEventDate">Event Date</p>
+          </div>
+
+          <div class="ticket-options" id="ticketOptions">
+            <!-- Ticket options will be populated here -->
+          </div>
+
+          <div
+            class="purchase-summary"
+            id="purchaseSummary"
+            style="display: none"
+          >
+            <h3>Order Summary</h3>
+            <div class="summary-item">
+              <span id="summaryTicketType">General Admission</span>
+              <span id="summaryQuantity">x1</span>
+              <span id="summaryPrice">$25.00</span>
+            </div>
+            <div class="summary-total">
+              <strong>Total: <span id="summaryTotal">$25.00</span></strong>
+            </div>
+          </div>
+
+          <div class="buyer-info" id="buyerInfo" style="display: none">
+            <h3>Buyer Information</h3>
+            <form id="buyerForm">
+              <div class="form-group">
+                <label for="buyerName">Full Name</label>
+                <input type="text" id="buyerName" required />
+              </div>
+              <div class="form-group">
+                <label for="buyerEmail">Email Address</label>
+                <input type="email" id="buyerEmail" required />
+              </div>
+              <div class="form-group">
+                <label for="buyerPhone">Phone Number</label>
+                <input type="tel" id="buyerPhone" />
+              </div>
+            </form>
+          </div>
+
+          <div class="purchase-actions">
+            <button class="btn-secondary" onclick="closeTicketPurchaseModal()">
+              Cancel
+            </button>
+            <button
+              class="btn-primary"
+              id="purchaseBtn"
+              onclick="completePurchase()"
+            >
+              Complete Purchase
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentDate = new Date();
+      let currentView = "calendar";
+      let currentFilter = "all";
+      let allEvents = [];
+      let selectedEvent = null;
+      let selectedTicketType = null;
+      let selectedQuantity = 1;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check authentication
+        if (!window.dataManager.isAuthenticated()) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        loadUserData();
+        loadEvents();
+        generateCalendar();
+        initializeEventHandlers();
+      });
+
+      function loadUserData() {
+        const currentUser = window.dataManager.getCurrentUser();
+        if (!currentUser) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        const initials = (
+          currentUser.firstName.charAt(0) + currentUser.lastName.charAt(0)
+        ).toUpperCase();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById(
+          "userName"
+        ).textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+      }
+
+      function loadEvents() {
+        // Get all published events for public viewing
+        allEvents = window.dataManager.getAllEvents();
+
+        // Add sample events if none exist (for demo purposes)
+        if (allEvents.length === 0) {
+          createSampleEvents();
+          allEvents = window.dataManager.getAllEvents();
+        }
+
+        displayEvents();
+      }
+
+      function createSampleEvents() {
+        const currentUser = window.dataManager.getCurrentUser();
+        if (!currentUser) return;
+
+        const sampleEvents = [
+          {
+            title: "Summer Music Festival",
+            description:
+              "Join us for an amazing summer music festival featuring top artists",
+            date: "2025-08-15",
+            startTime: "18:00",
+            endTime: "23:00",
+            location: "Central Park, New York",
+            status: "published",
+            capacity: 500,
+            category: "Music",
+            tickets: [
+              {
+                name: "General Admission",
+                price: 45,
+                quantity: 300,
+                type: "paid",
+              },
+              { name: "VIP", price: 120, quantity: 50, type: "paid" },
+            ],
+          },
+          {
+            title: "Tech Conference 2025",
+            description: "Annual technology conference with industry leaders",
+            date: "2025-09-20",
+            startTime: "09:00",
+            endTime: "17:00",
+            location: "Convention Center, San Francisco",
+            status: "published",
+            capacity: 200,
+            category: "Business",
+            tickets: [
+              { name: "Early Bird", price: 150, quantity: 100, type: "paid" },
+              { name: "Regular", price: 200, quantity: 100, type: "paid" },
+            ],
+          },
+          {
+            title: "Community Art Workshop",
+            description: "Free art workshop for the community",
+            date: "2025-07-30",
+            startTime: "14:00",
+            endTime: "16:00",
+            location: "Community Center, Brooklyn",
+            status: "published",
+            capacity: 30,
+            category: "Arts",
+            tickets: [
+              { name: "Free Admission", price: 0, quantity: 30, type: "free" },
+            ],
+          },
+        ];
+
+        sampleEvents.forEach((eventData) => {
+          try {
+            const event = window.dataManager.createEvent(eventData);
+            // Add tickets to the event
+            eventData.tickets.forEach((ticketData) => {
+              window.dataManager.addTicketToEvent(event.id, ticketData);
+            });
+          } catch (error) {
+            console.log("Could not create sample event:", error);
+          }
+        });
+      }
+
+      function initializeEventHandlers() {
+        // Search functionality
+        const searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("input", function () {
+          const searchTerm = this.value.toLowerCase();
+          filterEvents(searchTerm);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener("keydown", function (e) {
+          if (e.ctrlKey || e.metaKey) {
+            switch (e.key) {
+              case "n":
+                e.preventDefault();
+                openCreateEventModal();
+                break;
+              case "f":
+                e.preventDefault();
+                searchInput.focus();
+                break;
+            }
+          }
+
+          if (e.key === "Escape") {
+            closeCreateEventModal();
+            closeEventDetailsModal();
+            closeTicketPurchaseModal();
+          }
+        });
+      }
+
+      function filterEvents(searchTerm = "") {
+        let filteredEvents = allEvents;
+
+        if (searchTerm) {
+          filteredEvents = allEvents.filter(
+            (event) =>
+              event.title.toLowerCase().includes(searchTerm) ||
+              event.description.toLowerCase().includes(searchTerm) ||
+              event.location.toLowerCase().includes(searchTerm)
+          );
+        }
+
+        // Apply current filter
+        switch (currentFilter) {
+          case "upcoming":
+            const now = new Date();
+            filteredEvents = filteredEvents.filter(
+              (event) => new Date(event.date) >= now
+            );
+            break;
+          case "draft":
+            filteredEvents = filteredEvents.filter(
+              (event) => event.status === "draft"
+            );
+            break;
+          case "past":
+            const today = new Date();
+            filteredEvents = filteredEvents.filter(
+              (event) => new Date(event.date) < today
+            );
+            break;
+          case "published":
+            filteredEvents = filteredEvents.filter(
+              (event) => event.status === "published"
+            );
+            break;
+        }
+
+        // Update display with filtered events
+        if (currentView === "calendar") {
+          generateCalendar(filteredEvents);
+        } else {
+          displayListView(filteredEvents);
+        }
+      }
+
+      function generateCalendar(eventsToShow = allEvents) {
+        const calendarGrid = document.getElementById("calendarGrid");
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        document.getElementById("currentMonth").textContent = `${
+          monthNames[currentDate.getMonth()]
+        } ${currentDate.getFullYear()}`;
+
+        // Clear previous calendar
+        calendarGrid.innerHTML = "";
+
+        // Create day headers
+        const dayHeaders = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
+        dayHeaders.forEach((day) => {
+          const dayHeader = document.createElement("div");
+          dayHeader.className = "day-header";
+          dayHeader.textContent = day;
+          calendarGrid.appendChild(dayHeader);
+        });
+
+        // Get first day of month and number of days
+        const firstDay = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          1
+        );
+        const lastDay = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth() + 1,
+          0
+        );
+        const startDate = new Date(firstDay);
+        startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+        // Generate calendar days
+        for (let i = 0; i < 42; i++) {
+          const cellDate = new Date(startDate);
+          cellDate.setDate(startDate.getDate() + i);
+
+          const dayCell = document.createElement("div");
+          dayCell.className = "calendar-day";
+
+          if (cellDate.getMonth() !== currentDate.getMonth()) {
+            dayCell.classList.add("other-month");
+          }
+
+          if (isToday(cellDate)) {
+            dayCell.classList.add("today");
+          }
+
+          const dayNumber = document.createElement("div");
+          dayNumber.className = "day-number";
+          dayNumber.textContent = cellDate.getDate();
+          dayCell.appendChild(dayNumber);
+
+          // Add events for this day
+          const dayEvents = getEventsForDate(cellDate, eventsToShow);
+          dayEvents.forEach((event) => {
+            const eventElement = document.createElement("div");
+            eventElement.className = "calendar-event";
+            eventElement.innerHTML = `
+                        <span class="event-time">${formatTime(
+                          event.startTime
+                        )}</span>
+                        <span class="event-title">${event.title}</span>
+                    `;
+            eventElement.onclick = (e) => {
+              e.stopPropagation();
+              showEventDetails(event);
+            };
+            dayCell.appendChild(eventElement);
+          });
+
+          calendarGrid.appendChild(dayCell);
+        }
+      }
+
+      function getEventsForDate(date, eventsToShow = allEvents) {
+        return eventsToShow.filter((event) => {
+          const eventDate = new Date(event.date);
+          return eventDate.toDateString() === date.toDateString();
+        });
+      }
+
+      function isToday(date) {
+        const today = new Date();
+        return date.toDateString() === today.toDateString();
+      }
+
+      function formatTime(timeStr) {
+        if (!timeStr) return "";
+        const [hours, minutes] = timeStr.split(":");
+        const hour = parseInt(hours);
+        const ampm = hour >= 12 ? "PM" : "AM";
+        const displayHour = hour % 12 || 12;
+        return `${displayHour}${minutes !== "00" ? ":" + minutes : ""}${ampm}`;
+      }
+
+      function displayEvents() {
+        if (currentView === "calendar") {
+          generateCalendar();
+        } else {
+          displayListView();
+        }
+      }
+
+      function displayListView(eventsToShow = allEvents) {
+        const eventsList = document.getElementById("eventsList");
+
+        if (eventsToShow.length === 0) {
+          eventsList.innerHTML = `
+                    <div class="no-events">
+                        <h3>No events found</h3>
+                        <p>Check back later for upcoming events</p>
+                    </div>
+                `;
+          return;
+        }
+
+        eventsList.innerHTML = eventsToShow
+          .map((event) => {
+            const eventDate = new Date(event.date);
+            const monthNames = [
+              "JAN",
+              "FEB",
+              "MAR",
+              "APR",
+              "MAY",
+              "JUN",
+              "JUL",
+              "AUG",
+              "SEP",
+              "OCT",
+              "NOV",
+              "DEC",
+            ];
+
+            // Calculate ticket info
+            const tickets = event.tickets || [];
+            const minPrice =
+              tickets.length > 0
+                ? Math.min(...tickets.map((t) => t.price || 0))
+                : 0;
+            const totalSold = tickets.reduce(
+              (sum, t) => sum + (t.sold || 0),
+              0
+            );
+            const totalCapacity = tickets.reduce(
+              (sum, t) => sum + (t.quantity || 0),
+              0
+            );
+            const revenue = tickets.reduce(
+              (sum, t) => sum + (t.price || 0) * (t.sold || 0),
+              0
+            );
+
+            return `
+                    <div class="event-row" onclick="showEventDetails(${JSON.stringify(
+                      event
+                    ).replace(/"/g, "&quot;")})">
+                        <div class="col-event">
+                            <div class="event-info">
+                                <div class="event-date">
+                                    <div class="month">${
+                                      monthNames[eventDate.getMonth()]
+                                    }</div>
+                                    <div class="day">${eventDate.getDate()}</div>
+                                </div>
+                                <div class="event-image">
+                                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=60&q=80" alt="${
+                                      event.title
+                                    }">
+                                </div>
+                                <div class="event-details">
+                                    <h3>${event.title}</h3>
+                                    <p>${eventDate.toLocaleDateString("en-US", {
+                                      weekday: "long",
+                                      month: "long",
+                                      day: "numeric",
+                                      year: "numeric",
+                                    })} at ${formatTime(event.startTime)}</p>
+                                    <p class="event-location">${
+                                      event.location
+                                    }</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sold">${totalSold} / ${totalCapacity}</div>
+                        <div class="col-gross">$${revenue.toFixed(2)}</div>
+                        <div class="col-status">
+                            <span class="status-badge ${
+                              event.status || "draft"
+                            }">${capitalizeFirst(
+              event.status || "draft"
+            )}</span>
+                        </div>
+                        <div class="col-actions">
+                            <button class="buy-tickets-btn" onclick="event.stopPropagation(); openTicketPurchase('${
+                              event.id
+                            }')">
+                                ${
+                                  minPrice === 0
+                                    ? "Get Free Tickets"
+                                    : `From $${minPrice}`
+                                }
+                            </button>
+                        </div>
+                    </div>
+                `;
+          })
+          .join("");
+      }
+
+      function capitalizeFirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+
+      function showEventDetails(event) {
+        if (typeof event === "string") {
+          event = JSON.parse(event);
+        }
+
+        selectedEvent = event;
+        const modal = document.getElementById("eventDetailsModal");
+        const content = document.getElementById("eventDetailsContent");
+
+        const eventDate = new Date(event.date);
+        const tickets = event.tickets || [];
+        const minPrice =
+          tickets.length > 0
+            ? Math.min(...tickets.map((t) => t.price || 0))
+            : 0;
+
+        content.innerHTML = `
+                <div class="event-header">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="${
+                      event.title
+                    }" class="event-image">
+                    <div class="event-info">
+                        <h1>${event.title}</h1>
+                        <p class="event-date">${eventDate.toLocaleDateString(
+                          "en-US",
+                          {
+                            weekday: "long",
+                            month: "long",
+                            day: "numeric",
+                            year: "numeric",
+                          }
+                        )} at ${formatTime(event.startTime)}</p>
+                        <p class="event-location">${event.location}</p>
+                        <p class="event-description">${event.description}</p>
+                    </div>
+                </div>
+                
+                <div class="event-actions">
+                    <button class="btn-primary" onclick="openTicketPurchase('${
+                      event.id
+                    }')">
+                        ${
+                          minPrice === 0
+                            ? "Get Free Tickets"
+                            : `Buy Tickets - From $${minPrice}`
+                        }
+                    </button>
+                </div>
+            `;
+
+        modal.style.display = "flex";
+      }
+
+      function openTicketPurchase(eventId) {
+        const event = allEvents.find((e) => e.id === eventId);
+        if (!event) return;
+
+        selectedEvent = event;
+        const modal = document.getElementById("ticketPurchaseModal");
+
+        // Update event info
+        document.getElementById("purchaseEventTitle").textContent = event.title;
+        const eventDate = new Date(event.date);
+        document.getElementById(
+          "purchaseEventDate"
+        ).textContent = `${eventDate.toLocaleDateString("en-US", {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        })} at ${formatTime(event.startTime)}`;
+
+        // Populate ticket options
+        const ticketOptions = document.getElementById("ticketOptions");
+        const tickets = event.tickets || [];
+
+        if (tickets.length === 0) {
+          ticketOptions.innerHTML =
+            "<p>No tickets available for this event.</p>";
+          return;
+        }
+
+        ticketOptions.innerHTML = tickets
+          .map(
+            (ticket) => `
+                <div class="ticket-option" onclick="selectTicket('${
+                  ticket.name
+                }', ${ticket.price})">
+                    <div class="ticket-info">
+                        <h4>${ticket.name}</h4>
+                        <p class="ticket-price">${
+                          ticket.price === 0
+                            ? "Free"
+                            : `$${ticket.price.toFixed(2)}`
+                        }</p>
+                        <p class="ticket-availability">${
+                          ticket.quantity - (ticket.sold || 0)
+                        } available</p>
+                    </div>
+                    <div class="quantity-selector">
+                        <button type="button" onclick="event.stopPropagation(); changeQuantity(-1)">-</button>
+                        <span class="quantity">1</span>
+                        <button type="button" onclick="event.stopPropagation(); changeQuantity(1)">+</button>
+                    </div>
+                </div>
+            `
+          )
+          .join("");
+
+        // Reset form
+        document.getElementById("purchaseSummary").style.display = "none";
+        document.getElementById("buyerInfo").style.display = "none";
+        document.getElementById("purchaseBtn").textContent = "Select Tickets";
+
+        modal.style.display = "flex";
+      }
+
+      function selectTicket(ticketName, price) {
+        selectedTicketType = { name: ticketName, price: price };
+
+        // Update UI
+        document.querySelectorAll(".ticket-option").forEach((option) => {
+          option.classList.remove("selected");
+        });
+        event.target.closest(".ticket-option").classList.add("selected");
+
+        // Show summary
+        updatePurchaseSummary();
+        document.getElementById("purchaseSummary").style.display = "block";
+        document.getElementById("buyerInfo").style.display = "block";
+        document.getElementById("purchaseBtn").textContent =
+          "Complete Purchase";
+      }
+
+      function changeQuantity(delta) {
+        selectedQuantity = Math.max(1, Math.min(10, selectedQuantity + delta));
+        document.querySelector(".quantity").textContent = selectedQuantity;
+        updatePurchaseSummary();
+      }
+
+      function updatePurchaseSummary() {
+        if (!selectedTicketType) return;
+
+        const total = selectedTicketType.price * selectedQuantity;
+
+        document.getElementById("summaryTicketType").textContent =
+          selectedTicketType.name;
+        document.getElementById(
+          "summaryQuantity"
+        ).textContent = `x${selectedQuantity}`;
+        document.getElementById("summaryPrice").textContent = `$${(
+          selectedTicketType.price * selectedQuantity
+        ).toFixed(2)}`;
+        document.getElementById("summaryTotal").textContent = `$${total.toFixed(
+          2
+        )}`;
+      }
+
+      function completePurchase() {
+        if (!selectedEvent || !selectedTicketType) {
+          alert("Please select a ticket type first.");
+          return;
+        }
+
+        const buyerName = document.getElementById("buyerName").value;
+        const buyerEmail = document.getElementById("buyerEmail").value;
+
+        if (!buyerName || !buyerEmail) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+
+        try {
+          // Create order
+          const orderData = {
+            eventId: selectedEvent.id,
+            eventTitle: selectedEvent.title,
+            buyerName: buyerName,
+            buyerEmail: buyerEmail,
+            ticketType: selectedTicketType.name,
+            ticketQuantity: selectedQuantity,
+            total: selectedTicketType.price * selectedQuantity,
+            status: "Completed",
+          };
+
+          const order = window.dataManager.createOrder(orderData);
+
+          // Update ticket sold count
+          const event = window.dataManager.getEventById(selectedEvent.id);
+          if (event && event.tickets) {
+            const ticketIndex = event.tickets.findIndex(
+              (t) => t.name === selectedTicketType.name
+            );
+            if (ticketIndex !== -1) {
+              event.tickets[ticketIndex].sold =
+                (event.tickets[ticketIndex].sold || 0) + selectedQuantity;
+              window.dataManager.updateEvent(selectedEvent.id, {
+                tickets: event.tickets,
+              });
+            }
+          }
+
+          alert(
+            `Purchase successful! Order #${order.orderNumber} has been created. You will receive a confirmation email shortly.`
+          );
+          closeTicketPurchaseModal();
+
+          // Refresh events to show updated sold counts
+          loadEvents();
+        } catch (error) {
+          console.error("Purchase error:", error);
+          alert("Purchase failed. Please try again.");
+        }
+      }
+
+      function switchView(view) {
+        currentView = view;
+
+        document
+          .querySelectorAll(".view-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document.getElementById(view + "ViewBtn").classList.add("active");
+
+        if (view === "calendar") {
+          document.getElementById("calendarView").style.display = "block";
+          document.getElementById("listView").style.display = "none";
+          document.getElementById("showcaseBanner").style.display = "block";
+          generateCalendar();
+        } else {
+          document.getElementById("calendarView").style.display = "none";
+          document.getElementById("listView").style.display = "block";
+          document.getElementById("showcaseBanner").style.display = "none";
+          displayListView();
+        }
+      }
+
+      function switchTab(tab) {
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+      }
+
+      function toggleFilterDropdown() {
+        const dropdown = document.getElementById("filterDropdown");
+        dropdown.style.display =
+          dropdown.style.display === "block" ? "none" : "block";
+      }
+
+      function selectFilter(filter) {
+        currentFilter = filter;
+
+        const filterTexts = {
+          all: "All events",
+          upcoming: "Upcoming events",
+          draft: "Draft",
+          past: "Past events",
+          published: "Published",
+        };
+
+        document.getElementById("filterText").textContent =
+          filterTexts[filter] || "All events";
+        document.getElementById("filterDropdown").style.display = "none";
+
+        // Update active state
+        document
+          .querySelectorAll(".filter-option")
+          .forEach((opt) => opt.classList.remove("active"));
+        event.target.classList.add("active");
+
+        // Apply filter
+        filterEvents();
+      }
+
+      function previousMonth() {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        generateCalendar();
+      }
+
+      function nextMonth() {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        generateCalendar();
+      }
+
+      function goToToday() {
+        currentDate = new Date();
+        generateCalendar();
+      }
+
+      function setCalendarView(view) {
+        document
+          .querySelectorAll(".toggle-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+      }
+
+      function openCreateEventModal() {
+        document.getElementById("createEventModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeCreateEventModal() {
+        document.getElementById("createEventModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function closeEventDetailsModal() {
+        document.getElementById("eventDetailsModal").style.display = "none";
+      }
+
+      function closeTicketPurchaseModal() {
+        document.getElementById("ticketPurchaseModal").style.display = "none";
+        selectedEvent = null;
+        selectedTicketType = null;
+        selectedQuantity = 1;
+
+        // Reset form
+        document.getElementById("buyerForm").reset();
+      }
+
+      function createFromScratch() {
+        closeCreateEventModal();
+        window.location.href = "event-builder.html";
+      }
+
+      function createWithAI() {
+        closeCreateEventModal();
+        window.location.href = "create-event-ai.html";
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".filter-dropdown")) {
+          document.getElementById("filterDropdown").style.display = "none";
+        }
+      });
+
+      // Close modals when clicking outside
+      document
+        .getElementById("createEventModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeCreateEventModal();
+          }
+        });
+
+      document
+        .getElementById("eventDetailsModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeEventDetailsModal();
+          }
+        });
+
+      document
+        .getElementById("ticketPurchaseModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeTicketPurchaseModal();
+          }
+        });
+
+      // Refresh events when returning to page
+      window.addEventListener("focus", function () {
+        loadEvents();
+      });
+    </script>
+  </body>
+</html>

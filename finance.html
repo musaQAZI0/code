@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance - Crowd</title>
+    <link rel="stylesheet" href="finance-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-text">crowd</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard-home.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="events-calendar.html" class="nav-item">
+                    <i class="fas fa-calendar"></i>
+                </a>
+                <a href="orders.html" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                </a>
+                <a href="marketing.html" class="nav-item">
+                    <i class="fas fa-bullhorn"></i>
+                </a>
+                <a href="analytics.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                </a>
+                <a href="finance.html" class="nav-item active">
+                    <i class="fas fa-university"></i>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item">
+                    <i class="fas fa-th"></i>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-question-circle"></i>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-actions">
+                    <button class="create-btn">
+                        <i class="fas fa-plus"></i>
+                        Create
+                    </button>
+                    <div class="user-menu">
+                        <div class="user-avatar">AA</div>
+                        <span class="user-name">abdul ahad</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Finance Content -->
+            <div class="finance-content">
+                <div class="content-wrapper">
+                    <div class="left-sidebar">
+                        <div class="sidebar-section">
+                            <h3>Upcoming</h3>
+                        </div>
+                        <div class="sidebar-section">
+                            <h3>Exports</h3>
+                        </div>
+                    </div>
+
+                    <div class="main-panel">
+                        <h1 class="page-title">Finance</h1>
+                        
+                        <!-- Tab Navigation -->
+                        <div class="tab-navigation">
+                            <button class="tab-btn active">Payouts</button>
+                            <button class="tab-btn">Charges & Credits</button>
+                            <button class="tab-btn">Invoices</button>
+                            <button class="tab-btn">Settings</button>
+                        </div>
+
+                        <!-- Filter Buttons -->
+                        <div class="filter-buttons">
+                            <button class="filter-btn active">Summary</button>
+                            <button class="filter-btn secondary">By payout date</button>
+                            <button class="filter-btn inactive">
+                                By event date
+                                <span class="notification-dot"></span>
+                            </button>
+                        </div>
+
+                        <!-- Description -->
+                        <p class="description">View a list of payouts that have been sent to your bank account</p>
+
+                        <!-- Action Bar -->
+                        <div class="action-bar">
+                            <button class="filters-btn">
+                                <i class="fas fa-sliders-h"></i>
+                                Filters
+                            </button>
+                            <span class="export-text">Export</span>
+                        </div>
+
+                        <!-- Empty State -->
+                     
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

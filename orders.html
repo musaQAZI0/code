@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - Crowd</title>
+    <link rel="stylesheet" href="orders-styles.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="js/data-manager.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#f97316">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                
+                <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-text">crowd</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard-home.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="events-calendar.html" class="nav-item">
+                    <i class="fas fa-calendar"></i>
+                </a>
+                <a href="orders.html" class="nav-item active">
+                    <i class="fas fa-file-alt"></i>
+                </a>
+                <a href="marketing.html" class="nav-item">
+                    <i class="fas fa-bullhorn"></i>
+                </a>
+                <a href="analytics.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                </a>
+                <a href="finance.html" class="nav-item ">
+                    <i class="fas fa-university"></i>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item">
+                    <i class="fas fa-th"></i>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-question-circle"></i>
+                </a>
+            </div>
+          </aside>
+        </div>
+      </aside>
+            
+                
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-content">
+                    <div class="logo-text">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#f97316">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span>crowd</span>
+                    </div>
+                    <div class="header-right">
+                        <button class="create-btn" onclick="window.location.href='event-builder.html'">
+                            + Create
+                        </button>
+                        <div class="user-menu" onclick="toggleUserMenu()">
+                            <div class="user-avatar" id="userAvatar">AA</div>
+                            <span class="user-name" id="userName">abdul ahad</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 10l5 5 5-5z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Orders Content -->
+            <div class="orders-content">
+                <div class="orders-header">
+                    <h1>Order Management</h1>
+                    <p class="orders-description">
+                        Manage all orders, including editing buyer info, resending tickets and processing refunds. To download a list of orders, view the 
+                        <a href="#" class="orders-report-link">Orders report</a>.
+                    </p>
+                </div>
+
+                <!-- Search and Filters -->
+                <div class="orders-filters">
+                    <div class="search-container">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="search-icon">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="orderSearch" placeholder="Search order number, email, or name" class="search-input">
+                    </div>
+                    
+                    <div class="filter-container">
+                        <select id="searchByFilter" class="filter-select">
+                            <option value="buyer">Search by</option>
+                            <option value="buyer">Buyer</option>
+                            <option value="order">Order number</option>
+                            <option value="email">Email</option>
+                            <option value="event">Event</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-container">
+                        <select id="dateRangeFilter" class="filter-select">
+                            <option value="past3months">Date range</option>
+                            <option value="today">Today</option>
+                            <option value="past7days">Past 7 days</option>
+                            <option value="pastweek">Past week</option>
+                            <option value="pastmonth">Past month</option>
+                            <option value="past3months">Past 3 months</option>
+                            <option value="custom">Custom range</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Orders Table -->
+                <div class="orders-table-container" id="ordersTableContainer">
+                    <!-- Orders will be populated here -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="#9ca3af">
+                            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <p>No orders to show. Use the filters above to search for specific orders or refine your results.</p>
+                </div>
+
+                <!-- Learn More -->
+                <div class="learn-more">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#3b82f6">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <line x1="12" x2="12.01" y1="17" y2="17"/>
+                    </svg>
+                    <span>Learn more about <a href="#" class="learn-link">managing orders</a></span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let allOrders = [];
+        let filteredOrders = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!window.dataManager.isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            loadUserData();
+            initializeOrders();
+            setupEventListeners();
+        });
+
+        function loadUserData() {
+            const currentUser = window.dataManager.getCurrentUser();
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update user display
+            const initials = (currentUser.firstName.charAt(0) + currentUser.lastName.charAt(0)).toUpperCase();
+            document.getElementById('userAvatar').textContent = initials;
+            document.getElementById('userName').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+        }
+
+        function initializeOrders() {
+            // Get or create sample orders
+            allOrders = window.dataManager.getOrders() || [];
+            
+            if (allOrders.length === 0) {
+                // Generate sample orders for demonstration
+                generateSampleOrders();
+                allOrders = window.dataManager.getOrders();
+            }
+            
+            filteredOrders = [...allOrders];
+            renderOrders();
+        }
+
+        function generateSampleOrders() {
+            const currentUser = window.dataManager.getCurrentUser();
+            const userEvents = window.dataManager.getUserEvents();
+            
+            if (userEvents.length === 0) {
+                // Create a sample event first
+                const sampleEvent = {
+                    id: 'evt_' + Date.now(),
+                    title: 'Sample Music Festival',
+                    date: '2025-08-15',
+                    time: '18:00',
+                    location: 'Central Park, New York',
+                    description: 'A sample event for demonstration',
+                    status: 'published',
+                    organizerId: currentUser.id,
+                    createdAt: new Date().toISOString()
+                };
+                window.dataManager.saveEvent(sampleEvent);
+                userEvents.push(sampleEvent);
+            }
+
+            const sampleOrders = [
+                {
+                    id: 'ORD-001',
+                    eventId: userEvents[0].id,
+                    eventTitle: userEvents[0].title,
+                    buyerName: 'John Smith',
+                    buyerEmail: 'john.smith@email.com',
+                    orderDate: '2025-01-20',
+                    ticketType: 'General Admission',
+                    quantity: 2,
+                    total: 150.00,
+                    status: 'completed',
+                    paymentMethod: 'Credit Card'
+                },
+                {
+                    id: 'ORD-002',
+                    eventId: userEvents[0].id,
+                    eventTitle: userEvents[0].title,
+                    buyerName: 'Sarah Johnson',
+                    buyerEmail: 'sarah.j@email.com',
+                    orderDate: '2025-01-19',
+                    ticketType: 'VIP',
+                    quantity: 1,
+                    total: 250.00,
+                    status: 'completed',
+                    paymentMethod: 'PayPal'
+                },
+                {
+                    id: 'ORD-003',
+                    eventId: userEvents[0].id,
+                    eventTitle: userEvents[0].title,
+                    buyerName: 'Mike Davis',
+                    buyerEmail: 'mike.davis@email.com',
+                    orderDate: '2025-01-18',
+                    ticketType: 'General Admission',
+                    quantity: 4,
+                    total: 300.00,
+                    status: 'pending',
+                    paymentMethod: 'Credit Card'
+                }
+            ];
+
+            sampleOrders.forEach(order => {
+                window.dataManager.saveOrder(order);
+            });
+        }
+
+        function setupEventListeners() {
+            // Search input
+            document.getElementById('orderSearch').addEventListener('input', handleSearch);
+            
+            // Filter dropdowns
+            document.getElementById('searchByFilter').addEventListener('change', handleSearch);
+            document.getElementById('dateRangeFilter').addEventListener('change', handleDateRangeChange);
+        }
+
+        function handleSearch() {
+            const searchTerm = document.getElementById('orderSearch').value.toLowerCase();
+            const searchBy = document.getElementById('searchByFilter').value;
+            
+            filteredOrders = allOrders.filter(order => {
+                if (!searchTerm) return true;
+                
+                switch(searchBy) {
+                    case 'buyer':
+                        return order.buyerName.toLowerCase().includes(searchTerm);
+                    case 'order':
+                        return order.id.toLowerCase().includes(searchTerm);
+                    case 'email':
+                        return order.buyerEmail.toLowerCase().includes(searchTerm);
+                    case 'event':
+                        return order.eventTitle.toLowerCase().includes(searchTerm);
+                    default:
+                        return order.buyerName.toLowerCase().includes(searchTerm) ||
+                               order.buyerEmail.toLowerCase().includes(searchTerm) ||
+                               order.id.toLowerCase().includes(searchTerm) ||
+                               order.eventTitle.toLowerCase().includes(searchTerm);
+                }
+            });
+            
+            renderOrders();
+        }
+
+        function handleDateRangeChange() {
+            const dateRange = document.getElementById('dateRangeFilter').value;
+            
+            if (dateRange === 'custom') {
+                showCustomDateRangePicker();
+                return;
+            }
+            
+            const now = new Date();
+            let startDate = new Date();
+            
+            switch(dateRange) {
+                case 'today':
+                    startDate.setHours(0, 0, 0, 0);
+                    break;
+                case 'past7days':
+                    startDate.setDate(now.getDate() - 7);
+                    break;
+                case 'pastweek':
+                    startDate.setDate(now.getDate() - 7);
+                    break;
+                case 'pastmonth':
+                    startDate.setMonth(now.getMonth() - 1);
+                    break;
+                case 'past3months':
+                    startDate.setMonth(now.getMonth() - 3);
+                    break;
+                default:
+                    startDate = null;
+            }
+            
+            if (startDate) {
+                filteredOrders = allOrders.filter(order => {
+                    const orderDate = new Date(order.orderDate);
+                    return orderDate >= startDate;
+                });
+            } else {
+                filteredOrders = [...allOrders];
+            }
+            
+            handleSearch(); // Apply search filter as well
+        }
+
+        function showCustomDateRangePicker() {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Custom Date Range</h3>
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form onsubmit="applyCustomDateRange(event)">
+                            <div class="date-range-form">
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input type="date" id="startDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input type="date" id="endDate" required>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" onclick="closeModal()">Cancel</button>
+                                <button type="submit">Apply</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function applyCustomDateRange(event) {
+            event.preventDefault();
+            
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(document.getElementById('endDate').value);
+            
+            if (startDate > endDate) {
+                alert('Start date must be before end date');
+                return;
+            }
+            
+            filteredOrders = allOrders.filter(order => {
+                const orderDate = new Date(order.orderDate);
+                return orderDate >= startDate && orderDate <= endDate;
+            });
+            
+            closeModal();
+            handleSearch(); // Apply search filter as well
+        }
+
+        function renderOrders() {
+            const container = document.getElementById('ordersTableContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (filteredOrders.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = `
+                <div class="orders-table">
+                    <div class="table-header">
+                        <div class="header-cell">Order</div>
+                        <div class="header-cell">Event</div>
+                        <div class="header-cell">Buyer</div>
+                        <div class="header-cell">Date</div>
+                        <div class="header-cell">Amount</div>
+                        <div class="header-cell">Status</div>
+                        <div class="header-cell">Actions</div>
+                    </div>
+                    <div class="table-body">
+                        ${filteredOrders.map(order => `
+                            <div class="table-row" onclick="viewOrderDetails('${order.id}')">
+                                <div class="table-cell">
+                                    <div class="order-id">${order.id}</div>
+                                    <div class="order-tickets">${order.quantity} × ${order.ticketType}</div>
+                                </div>
+                                <div class="table-cell">
+                                    <div class="event-title">${order.eventTitle}</div>
+                                </div>
+                                <div class="table-cell">
+                                    <div class="buyer-name">${order.buyerName}</div>
+                                    <div class="buyer-email">${order.buyerEmail}</div>
+                                </div>
+                                <div class="table-cell">
+                                    <div class="order-date">${formatDate(order.orderDate)}</div>
+                                </div>
+                                <div class="table-cell">
+                                    <div class="order-amount">$${order.total.toFixed(2)}</div>
+                                </div>
+                                <div class="table-cell">
+                                    <span class="status-badge ${order.status}">${capitalizeFirst(order.status)}</span>
+                                </div>
+                                <div class="table-cell">
+                                    <div class="action-buttons">
+                                        <button class="action-btn" onclick="event.stopPropagation(); resendTickets('${order.id}')" title="Resend Tickets">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                                <polyline points="22,6 12,13 2,6"/>
+                                            </svg>
+                                        </button>
+                                        <button class="action-btn" onclick="event.stopPropagation(); processRefund('${order.id}')" title="Process Refund">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                                <path d="M3 3v5h5"/>
+                                                <path d="M12 7v5l4 2"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function viewOrderDetails(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content order-details-modal">
+                    <div class="modal-header">
+                        <h3>Order Details - ${order.id}</h3>
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="order-details">
+                            <div class="detail-section">
+                                <h4>Event Information</h4>
+                                <p><strong>Event:</strong> ${order.eventTitle}</p>
+                                <p><strong>Ticket Type:</strong> ${order.ticketType}</p>
+                                <p><strong>Quantity:</strong> ${order.quantity}</p>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <h4>Buyer Information</h4>
+                                <p><strong>Name:</strong> ${order.buyerName}</p>
+                                <p><strong>Email:</strong> ${order.buyerEmail}</p>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <h4>Order Information</h4>
+                                <p><strong>Order Date:</strong> ${formatDate(order.orderDate)}</p>
+                                <p><strong>Total Amount:</strong> $${order.total.toFixed(2)}</p>
+                                <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+                                <p><strong>Status:</strong> <span class="status-badge ${order.status}">${capitalizeFirst(order.status)}</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="order-actions">
+                            <button class="action-button primary" onclick="resendTickets('${order.id}')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                                Resend Tickets
+                            </button>
+                            <button class="action-button secondary" onclick="processRefund('${order.id}')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                    <path d="M3 3v5h5"/>
+                                </svg>
+                                Process Refund
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function resendTickets(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            if (confirm(`Resend tickets for order ${orderId} to ${order.buyerEmail}?`)) {
+                // Simulate sending tickets
+                showNotification(`Tickets resent to ${order.buyerEmail}`, 'success');
+                closeModal();
+            }
+        }
+
+        function processRefund(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Process Refund - ${orderId}</h3>
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form onsubmit="confirmRefund(event, '${orderId}')">
+                            <div class="refund-details">
+                                <p><strong>Order:</strong> ${orderId}</p>
+                                <p><strong>Buyer:</strong> ${order.buyerName}</p>
+                                <p><strong>Original Amount:</strong> $${order.total.toFixed(2)}</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Refund Amount</label>
+                                <input type="number" id="refundAmount" value="${order.total}" max="${order.total}" min="0" step="0.01" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Refund Reason</label>
+                                <select id="refundReason" required>
+                                    <option value="">Select reason</option>
+                                    <option value="customer_request">Customer Request</option>
+                                    <option value="event_cancelled">Event Cancelled</option>
+                                    <option value="duplicate_order">Duplicate Order</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Additional Notes (Optional)</label>
+                                <textarea id="refundNotes" rows="3" placeholder="Enter any additional notes..."></textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" onclick="closeModal()">Cancel</button>
+                                <button type="submit" class="refund-btn">Process Refund</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function confirmRefund(event, orderId) {
+            event.preventDefault();
+            
+            const refundAmount = parseFloat(document.getElementById('refundAmount').value);
+            const refundReason = document.getElementById('refundReason').value;
+            const refundNotes = document.getElementById('refundNotes').value;
+            
+            if (confirm(`Process refund of $${refundAmount.toFixed(2)} for order ${orderId}?`)) {
+                // Update order status
+                const orderIndex = allOrders.findIndex(o => o.id === orderId);
+                if (orderIndex !== -1) {
+                    allOrders[orderIndex].status = 'refunded';
+                    allOrders[orderIndex].refundAmount = refundAmount;
+                    allOrders[orderIndex].refundReason = refundReason;
+                    allOrders[orderIndex].refundNotes = refundNotes;
+                    allOrders[orderIndex].refundDate = new Date().toISOString();
+                    
+                    // Save updated order
+                    window.dataManager.saveOrder(allOrders[orderIndex]);
+                }
+                
+                // Update filtered orders
+                filteredOrders = [...allOrders];
+                renderOrders();
+                
+                showNotification(`Refund of $${refundAmount.toFixed(2)} processed for order ${orderId}`, 'success');
+                closeModal();
+            }
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                z-index: 1000;
+                font-weight: 500;
+                max-width: 400px;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function toggleUserMenu() {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.createElement('div');
+            dropdown.className = 'user-dropdown';
+            dropdown.innerHTML = `
+                <div class="dropdown-item" onclick="window.location.href='dashboard-home.html'">Dashboard</div>
+                <div class="dropdown-item" onclick="window.location.href='events-calendar.html'">Events</div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item" onclick="logoutUser()">Sign Out</div>
+            `;
+            
+            dropdown.style.cssText = `
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: white;
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                padding: 8px 0;
+                min-width: 150px;
+                z-index: 1000;
+                margin-top: 8px;
+            `;
+            
+            userMenu.style.position = 'relative';
+            userMenu.appendChild(dropdown);
+            
+            setTimeout(() => {
+                document.addEventListener('click', function closeDropdown(e) {
+                    if (!userMenu.contains(e.target)) {
+                        dropdown.remove();
+                        document.removeEventListener('click', closeDropdown);
+                    }
+                });
+            }, 0);
+        }
+
+        function logoutUser() {
+            if (confirm('Are you sure you want to sign out?')) {
+                window.dataManager.logout();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketing Tools - Crowd</title>
+    <link rel="stylesheet" href="marketing-styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="js/data-manager.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <span class="logo-text">crowd</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="dashboard-home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+          </a>
+          <a href="events-calendar.html" class="nav-item">
+            <i class="fas fa-calendar"></i>
+          </a>
+          <a href="orders.html" class="nav-item">
+            <i class="fas fa-file-alt"></i>
+          </a>
+          <a href="marketing.html" class="nav-item active">
+            <i class="fas fa-bullhorn"></i>
+          </a>
+          <a href="analytics.html" class="nav-item">
+            <i class="fas fa-chart-bar"></i>
+          </a>
+          <a href="finance.html" class="nav-item">
+            <i class="fas fa-university"></i>
+          </a>
+          <a href="settings.html" class="nav-item">
+            <i class="fas fa-cog"></i>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="#" class="nav-item">
+            <i class="fas fa-th"></i>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-content">
+            <div class="logo-text">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#f97316">
+                <path
+                  d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                />
+              </svg>
+              <span>crowd</span>
+            </div>
+            <div class="header-right">
+              <button
+                class="create-btn"
+                onclick="window.location.href='event-builder.html'"
+              >
+                + Create
+              </button>
+              <div class="user-menu" onclick="toggleUserMenu()">
+                <div class="user-avatar" id="userAvatar">AA</div>
+                <span class="user-name" id="userName">abdul ahad</span>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M7 10l5 5 5-5z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Marketing Content -->
+        <div class="marketing-content">
+          <div class="marketing-header">
+            <h1>Marketing Tools</h1>
+          </div>
+
+          <!-- Marketing Tabs -->
+          <div class="marketing-tabs">
+            <button class="tab-btn active" data-tab="dashboard">
+              Dashboard
+            </button>
+            <button class="tab-btn" data-tab="email-campaigns">
+              Email Campaigns
+            </button>
+            <button class="tab-btn" data-tab="social-media">
+              Social Media
+            </button>
+            <button class="tab-btn" data-tab="paid-ads">Paid Social Ads</button>
+            <button class="tab-btn" data-tab="instagram-growth">
+              Instagram Growth
+            </button>
+            <button class="tab-btn" data-tab="promotions">Promotions</button>
+            <button class="tab-btn" data-tab="settings">Settings</button>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="tab-content">
+            <!-- Dashboard Tab -->
+            <div class="tab-pane active" id="dashboard">
+              <div class="popular-tools">
+                <h2>Popular tools</h2>
+                <div class="tools-grid">
+                  <div class="tool-card" onclick="switchTab('social-media')">
+                    <div class="tool-icon">
+                      <svg
+                        width="48"
+                        height="48"
+                        viewBox="0 0 24 24"
+                        fill="#4f46e5"
+                      >
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                      </svg>
+                    </div>
+                    <h3>Share on social</h3>
+                    <p>Share your event with TikTok and LinkedIn followers</p>
+                  </div>
+
+                  <div class="tool-card" onclick="switchTab('email-campaigns')">
+                    <div class="tool-icon">
+                      <svg
+                        width="48"
+                        height="48"
+                        viewBox="0 0 24 24"
+                        fill="#4f46e5"
+                      >
+                        <path
+                          d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                        />
+                        <polyline points="22,6 12,13 2,6" />
+                      </svg>
+                    </div>
+                    <h3>Email marketing</h3>
+                    <p>Engage your audience with email campaigns</p>
+                  </div>
+
+                  <div class="tool-card" onclick="switchTab('paid-ads')">
+                    <div class="tool-icon">
+                      <svg
+                        width="48"
+                        height="48"
+                        viewBox="0 0 24 24"
+                        fill="#4f46e5"
+                      >
+                        <rect
+                          x="2"
+                          y="3"
+                          width="20"
+                          height="14"
+                          rx="2"
+                          ry="2"
+                        />
+                        <line x1="8" x2="16" y1="21" y2="21" />
+                        <line x1="12" x2="12" y1="17" y2="21" />
+                      </svg>
+                    </div>
+                    <h3>Ad campaign</h3>
+                    <p>Build better Facebook and Instagram ads</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="promotions-section">
+                <h2>Sell more tickets with promotions</h2>
+                <p>
+                  Events that offer promo codes are viewed 2x more on Crowd than
+                  events without them. Grow a loyal audience by offering
+                  exclusive discounts, deals, and exclusive event access.
+                </p>
+
+                <div class="promotion-cards">
+                  <div class="promotion-card" onclick="createPromoCode()">
+                    <div class="promotion-icon">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="#f97316"
+                      >
+                        <path d="M9 12l2 2 4-4" />
+                        <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3" />
+                        <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3" />
+                      </svg>
+                    </div>
+                    <div class="promotion-content">
+                      <h3>Create a promo code</h3>
+                      <p>
+                        Codes that reduce prices on specific tickets or on
+                        multiple tickets.
+                      </p>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#666">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </div>
+
+                  <div class="promotion-card" onclick="createAccessCode()">
+                    <div class="promotion-icon">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="#f97316"
+                      >
+                        <rect
+                          x="3"
+                          y="11"
+                          width="18"
+                          height="11"
+                          rx="2"
+                          ry="2"
+                        />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                      </svg>
+                    </div>
+                    <div class="promotion-content">
+                      <h3>Create an access code</h3>
+                      <p>
+                        Codes that reveal hidden tickets and an option to add a
+                        discount to them.
+                      </p>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#666">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email Campaigns Tab -->
+            <div class="tab-pane" id="email-campaigns">
+              <div class="email-campaigns-content">
+                <h2>
+                  Connect with your audience through custom newsletters and
+                  event announcements
+                </h2>
+                <p>
+                  Deliver newsletters to your entire audience, send event
+                  invites to past attendees, and re-engage subscribers with
+                  customizable email campaigns.
+                </p>
+
+                <div class="email-limit-section">
+                  <div class="limit-display">
+                    <div class="limit-circle">
+                      <svg width="120" height="120" viewBox="0 0 120 120">
+                        <circle
+                          cx="60"
+                          cy="60"
+                          r="50"
+                          fill="none"
+                          stroke="#e5e7eb"
+                          stroke-width="8"
+                        />
+                        <circle
+                          cx="60"
+                          cy="60"
+                          r="50"
+                          fill="none"
+                          stroke="#f97316"
+                          stroke-width="8"
+                          stroke-dasharray="0 314"
+                          stroke-linecap="round"
+                          transform="rotate(-90 60 60)"
+                        />
+                      </svg>
+                      <div class="limit-text">
+                        <span class="limit-number">0</span>
+                        <span class="limit-total">/250</span>
+                      </div>
+                    </div>
+                    <div class="limit-info">
+                      <h3>Daily limit</h3>
+                      <div class="limit-indicator">
+                        <span class="limit-dot"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="upgrade-prompt">
+                    <p>
+                      Send emails to more people when you
+                      <strong>subscribe to Crowd Pro.</strong>
+                    </p>
+                    <button class="subscribe-btn">Subscribe now</button>
+                  </div>
+                </div>
+
+                <div class="campaigns-section">
+                  <div class="campaigns-tabs">
+                    <button class="campaign-tab active">Campaigns</button>
+                    <button class="campaign-tab">Subscriber lists</button>
+                  </div>
+
+                  <div class="campaigns-controls">
+                    <div class="search-filter-row">
+                      <div class="search-box">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="#666"
+                        >
+                          <circle cx="11" cy="11" r="8" />
+                          <path d="M21 21l-4.35-4.35" />
+                        </svg>
+                        <input type="text" placeholder="Search by name" />
+                      </div>
+                      <select class="filter-dropdown">
+                        <option>Filter by status</option>
+                        <option>Draft</option>
+                        <option>Sent</option>
+                        <option>Scheduled</option>
+                      </select>
+                      <button class="new-campaign-btn">New campaign</button>
+                    </div>
+                  </div>
+
+                  <div class="campaigns-table">
+                    <div class="table-header">
+                      <div class="header-cell">Campaigns</div>
+                      <div class="header-cell">Opened</div>
+                      <div class="header-cell">Clicks</div>
+                      <div class="header-cell">Status</div>
+                    </div>
+                    <div class="empty-state">
+                      <svg
+                        width="48"
+                        height="48"
+                        viewBox="0 0 24 24"
+                        fill="#d1d5db"
+                      >
+                        <path
+                          d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2-2z"
+                        />
+                        <path d="M8 5v4" />
+                        <path d="M16 5v4" />
+                        <path d="M3 11h18" />
+                      </svg>
+                      <p>No results found</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Media Tab -->
+            <div class="tab-pane" id="social-media">
+              <div class="social-media-content">
+                <div class="social-sidebar">
+                  <button class="social-nav-btn active">Share on social</button>
+                  <button class="social-nav-btn">Facebook event</button>
+                </div>
+
+                <div class="social-main">
+                  <h2>Share on social</h2>
+                  <div class="social-features">
+                    <div class="feature-item">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="#10b981"
+                      >
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                      <span
+                        >Sell more tickets by tapping into your followers on
+                        TikTok and LinkedIn</span
+                      >
+                    </div>
+                    <div class="feature-item">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="#10b981"
+                      >
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                      <span
+                        >Use AI to create compelling content that speaks to your
+                        audience</span
+                      >
+                    </div>
+                    <div class="feature-item">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="#10b981"
+                      >
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                      <span
+                        >Easily create posts in just a few clicks and share
+                        across multiple social platforms at once</span
+                      >
+                    </div>
+                  </div>
+                  <button class="start-sharing-btn">Start sharing</button>
+                </div>
+
+                <div class="social-preview">
+                  <img
+                    src="assets/social-media-preview.png"
+                    alt="Social Media Preview"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Paid Social Ads Tab -->
+            <div class="tab-pane" id="paid-ads">
+              <div class="paid-ads-content">
+                <div class="ads-sidebar">
+                  <button class="ads-nav-btn active">Strategy</button>
+                  <button class="ads-nav-btn">Ad Campaigns</button>
+                  <button class="ads-nav-btn">Multi-Event Ads</button>
+                </div>
+
+                <div class="ads-main">
+                  <h2>Facebook & Instagram Ads</h2>
+                  <p>
+                    Quickly create ads that get your event in front of more
+                    people.
+                  </p>
+
+                  <div class="event-selection">
+                    <h3>Select your event</h3>
+                    <p>We'll recommend the best campaign to run</p>
+
+                    <div class="event-dropdown">
+                      <select>
+                        <option>event title</option>
+                      </select>
+                      <div class="event-info">
+                        <div class="event-image">
+                          <img
+                            src="/placeholder.svg?height=40&width=40"
+                            alt="Event"
+                          />
+                        </div>
+                        <div class="event-details">
+                          <p>Event on Fri, August 1st 2025 (in 7 days).</p>
+                          <div class="warning">
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="#f59e0b"
+                            >
+                              <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+                              />
+                              <line x1="12" x2="12" y1="9" y2="13" />
+                              <line x1="12" x2="12.01" y1="17" y2="17" />
+                            </svg>
+                            <span
+                              >Draft: This event is not live! Please publish the
+                              event before launching an ad campaign for
+                              it.</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="campaign-recommendation">
+                    <h3>The best marketing campaign to run right now</h3>
+                    <div class="campaign-chart">
+                      <div class="chart-container">
+                        <div class="chart-line">
+                          <div class="you-are-here">You are here</div>
+                          <svg width="600" height="200" viewBox="0 0 600 200">
+                            <path
+                              d="M50 150 Q150 50 250 100 T450 80 L550 60"
+                              stroke="#f97316"
+                              stroke-width="3"
+                              fill="none"
+                            />
+                            <circle cx="100" cy="120" r="4" fill="#f97316" />
+                          </svg>
+                        </div>
+                        <div class="chart-phases">
+                          <div class="phase">
+                            <h4>Early Bird</h4>
+                            <p>
+                              Events typically sell 32% of their total tickets
+                              in this period.
+                            </p>
+                          </div>
+                          <div class="phase">
+                            <h4>Halfway There</h4>
+                            <p>
+                              Events typically sell 35% of their total tickets
+                              in this period.
+                            </p>
+                          </div>
+                          <div class="phase">
+                            <h4>Last Call</h4>
+                            <p>
+                              Events typically sell 34% of their total tickets
+                              in this period.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="campaign-cta">
+                      <h3>
+                        Increase ticket sales and attendance with an ad campaign
+                      </h3>
+                      <button class="get-started-btn">Get Started →</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Instagram Growth Tab -->
+            <div class="tab-pane" id="instagram-growth">
+              <div class="instagram-content">
+                <div class="instagram-sidebar">
+                  <button class="instagram-nav-btn active">Insights</button>
+                  <button class="instagram-nav-btn">Instagram Growth</button>
+                </div>
+
+                <div class="instagram-main">
+                  <div class="insights-header">
+                    <h2>Insights</h2>
+                    <select class="campaigns-filter">
+                      <option>All Campaigns</option>
+                    </select>
+                  </div>
+
+                  <div class="insights-empty">
+                    <img
+                      src="assets/instagram-growth-illustration.png"
+                      alt="No campaigns"
+                    />
+                    <h3>You don't have any growth campaigns created yet</h3>
+                    <button class="create-campaign-btn">
+                      Create a campaign
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Promotions Tab -->
+            <div class="tab-pane" id="promotions">
+              <div class="promotions-content">
+                <h2>Sell more tickets with promotions</h2>
+                <p>
+                  Events that offer promo codes are viewed 2x more on Crowd than
+                  events without them. Grow a loyal audience by offering
+                  exclusive discounts, deals, and exclusive event access.
+                </p>
+
+                <div class="promotion-cards large">
+                  <div class="promotion-card large" onclick="createPromoCode()">
+                    <div class="promotion-icon large">
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="#f97316"
+                      >
+                        <path d="M9 12l2 2 4-4" />
+                        <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3" />
+                        <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3" />
+                      </svg>
+                    </div>
+                    <div class="promotion-content">
+                      <h3>Create a promo code</h3>
+                      <p>
+                        Codes that reduce prices on specific tickets or on
+                        multiple tickets.
+                      </p>
+                    </div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#666">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </div>
+
+                  <div
+                    class="promotion-card large"
+                    onclick="createAccessCode()"
+                  >
+                    <div class="promotion-icon large">
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="#f97316"
+                      >
+                        <rect
+                          x="3"
+                          y="11"
+                          width="18"
+                          height="11"
+                          rx="2"
+                          ry="2"
+                        />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                      </svg>
+                    </div>
+                    <div class="promotion-content">
+                      <h3>Create an access code</h3>
+                      <p>
+                        Codes that reveal hidden tickets and an option to add a
+                        discount to them.
+                      </p>
+                    </div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#666">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-pane" id="settings">
+              <div class="settings-content">
+                <div class="settings-sidebar">
+                  <button class="settings-nav-btn active">Billing</button>
+                  <button class="settings-nav-btn">Integrations</button>
+                  <button class="settings-nav-btn">Notifications</button>
+                </div>
+
+                <div class="settings-main">
+                  <h2>Billing</h2>
+
+                  <div class="billing-section">
+                    <div class="billing-content">
+                      <img
+                        src="assets/billing-illustration.png"
+                        alt="Billing"
+                      />
+                      <div class="billing-text">
+                        <h3>Looking for your Crowd Pro subscription?</h3>
+                        <p>
+                          Subscriptions have moved. Visit the Plan management
+                          page in Organization Settings to make changes or view
+                          billing details.
+                        </p>
+                        <div class="billing-actions">
+                          <button class="plan-management-btn">
+                            Plan management
+                          </button>
+                          <button class="compare-options-btn">
+                            Compare options
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="promoCodeModal" class="modal-overlay" style="display: none">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('promoCodeModal')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <line x1="18" x2="6" y1="6" y2="18" />
+            <line x1="6" x2="18" y1="6" y2="18" />
+          </svg>
+        </button>
+        <div class="modal-header">
+          <h2>Create Promo Code</h2>
+          <p>Create a discount code for your event tickets</p>
+        </div>
+        <form onsubmit="savePromoCode(event)">
+          <div class="form-group">
+            <label>Code Name</label>
+            <input
+              type="text"
+              id="promoCodeName"
+              placeholder="Enter promo code"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Discount Type</label>
+            <select id="promoDiscountType">
+              <option value="percentage">Percentage</option>
+              <option value="fixed">Fixed Amount</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Discount Value</label>
+            <input
+              type="number"
+              id="promoDiscountValue"
+              placeholder="Enter discount value"
+              required
+            />
+          </div>
+          <div class="form-actions">
+            <button type="button" onclick="closeModal('promoCodeModal')">
+              Cancel
+            </button>
+            <button type="submit">Create Code</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="accessCodeModal" class="modal-overlay" style="display: none">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('accessCodeModal')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <line x1="18" x2="6" y1="6" y2="18" />
+            <line x1="6" x2="18" y1="6" y2="18" />
+          </svg>
+        </button>
+        <div class="modal-header">
+          <h2>Create Access Code</h2>
+          <p>Create a code to reveal hidden tickets</p>
+        </div>
+        <form onsubmit="saveAccessCode(event)">
+          <div class="form-group">
+            <label>Access Code</label>
+            <input
+              type="text"
+              id="accessCodeName"
+              placeholder="Enter access code"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Hidden Ticket Type</label>
+            <input
+              type="text"
+              id="accessTicketType"
+              placeholder="VIP, Early Bird, etc."
+              required
+            />
+          </div>
+          <div class="form-actions">
+            <button type="button" onclick="closeModal('accessCodeModal')">
+              Cancel
+            </button>
+            <button type="submit">Create Code</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check authentication
+        if (!window.dataManager.isAuthenticated()) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        loadUserData();
+        initializeMarketing();
+      });
+
+      function loadUserData() {
+        const currentUser = window.dataManager.getCurrentUser();
+        if (!currentUser) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        const firstName = currentUser.firstName || "User";
+        const initials = (
+          currentUser.firstName.charAt(0) + currentUser.lastName.charAt(0)
+        ).toUpperCase();
+
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById(
+          "userName"
+        ).textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+      }
+
+      function initializeMarketing() {
+        // Initialize tab functionality
+        const tabBtns = document.querySelectorAll(".tab-btn");
+        const tabPanes = document.querySelectorAll(".tab-pane");
+
+        tabBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const tabId = btn.dataset.tab;
+            switchTab(tabId);
+          });
+        });
+      }
+
+      function switchTab(tabId) {
+        // Update tab buttons
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.classList.remove("active");
+          if (btn.dataset.tab === tabId) {
+            btn.classList.add("active");
+          }
+        });
+
+        // Update tab panes
+        document.querySelectorAll(".tab-pane").forEach((pane) => {
+          pane.classList.remove("active");
+          if (pane.id === tabId) {
+            pane.classList.add("active");
+          }
+        });
+      }
+
+      function createPromoCode() {
+        document.getElementById("promoCodeModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function createAccessCode() {
+        document.getElementById("accessCodeModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function savePromoCode(event) {
+        event.preventDefault();
+
+        const codeName = document.getElementById("promoCodeName").value;
+        const discountType = document.getElementById("promoDiscountType").value;
+        const discountValue =
+          document.getElementById("promoDiscountValue").value;
+
+        // Here you would save the promo code to your data manager
+        console.log("Promo code created:", {
+          codeName,
+          discountType,
+          discountValue,
+        });
+
+        closeModal("promoCodeModal");
+        showNotification("Promo code created successfully!", "success");
+      }
+
+      function saveAccessCode(event) {
+        event.preventDefault();
+
+        const accessCode = document.getElementById("accessCodeName").value;
+        const ticketType = document.getElementById("accessTicketType").value;
+
+        // Here you would save the access code to your data manager
+        console.log("Access code created:", { accessCode, ticketType });
+
+        closeModal("accessCodeModal");
+        showNotification("Access code created successfully!", "success");
+      }
+
+      function showNotification(message, type = "info") {
+        const notification = document.createElement("div");
+        notification.className = `notification ${type}`;
+        notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${
+                  type === "success"
+                    ? "#10b981"
+                    : type === "error"
+                    ? "#ef4444"
+                    : "#3b82f6"
+                };
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                z-index: 1000;
+                font-weight: 500;
+                max-width: 400px;
+                animation: slideIn 0.3s ease;
+            `;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.style.animation = "slideOut 0.3s ease";
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      function toggleUserMenu() {
+        // User menu functionality (same as dashboard)
+        console.log("Toggle user menu");
+      }
+    </script>
+  </body>
+</html>
